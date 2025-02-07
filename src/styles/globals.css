@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ajustes gerais */
+
+body {
+  font-family: "Fira Code", monospace;
+}
+
+.bg-light-bg {
+  background-color: #f4f4f4; /* Cor de fundo para o modo claro */
+}
+
+.bg-dark-bg {
+  background-color: #121212; /* Cor de fundo para o modo escuro */
+}
+
+/* Adiciona um efeito de transição no hover */
+nav ul li a {
+  padding: 0.5rem 1rem;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+  color: #ff9800;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 50%;
+  bottom: -2px;
+  background: #ff9800;
+  transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Animação de digitação */
+@keyframes typewriter {
+  from {
+      width: 0;
+  }
+  to {
+      width: 100%;
+  }
+}
+
+/* Animação de digitação */
+@keyframes typewriter {
+  from {
+      width: 0;
+  }
+  to {
+      width: 100%;
+  }
+}
+
+/* Efeito de digitação no hover */
+@keyframes blink {
+  0% {
+      border-color: transparent;
+  }
+  50% {
+      border-color: #f8f8f2; /* Cor do texto */
+  }
+  100% {
+      border-color: transparent;
+  }
+}
+
+.hover\:animate-typewriter:hover .animate-typewriter-text {
+  animation: typewriter 1.5s steps(7) 1s 1 normal both, blink 0.75s step-end infinite;
+  border-right: 2px solid #f8f8f2; /* Cor do cursor piscante */
+  padding-right: 0px; /* Para ajustar o espaço do cursor */
+}
