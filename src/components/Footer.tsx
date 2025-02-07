@@ -17,7 +17,7 @@ export default function Footer() {
           </a>
           <div className="w-px h-4 bg-gray-700"></div>
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/brunocaceress"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors duration-200"
