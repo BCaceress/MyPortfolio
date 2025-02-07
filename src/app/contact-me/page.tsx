@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { Mail, Send, Loader2 } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -24,37 +27,35 @@ export default function ContactForm() {
   const handleSend = (method: "email" | "whatsapp") => {
     if (method === "email") {
       if (!formData.name || !formData.email || !formData.message) {
-        alert("Ops! Parece que você deixou alguns campos em branco. Preencha tudo, por favor!");
+        toast.error("Preencha todos os campos antes de enviar!");
         return;
       }
   
-      // Dados do e-mail
       const subject = encodeURIComponent("Portfolio Contact");
       const body = encodeURIComponent(
         `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
       );
   
-      // Formata o link mailto corretamente
       window.location.href = `mailto:brunocaceres@live.com?subject=${subject}&body=${body}`;
+      toast.success("Redirecionando para o e-mail...");
     } else if (method === "whatsapp") {
       if (!formData.name || !formData.message) {
-        alert("Ei, cadê seu nome ou mensagem? Não dá pra enviar via WhatsApp sem eles.");
+        toast.error("Nome e mensagem são obrigatórios para enviar via WhatsApp!");
         return;
       }
   
       const phone = "5551981927091";
       const text = encodeURIComponent(`Hello, my name is ${formData.name}. ${formData.message}`);
       window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+      toast.success("Abrindo WhatsApp...");
     }
   
     setLoadingMethod(method);
-  
     setTimeout(() => {
       setLoadingMethod(null);
       setSubmitted(true);
     }, 2000);
   };
-  
   const handleReset = () => {
     setSubmitted(false);
     setFormData({
@@ -65,6 +66,8 @@ export default function ContactForm() {
   };
 
   return (
+    <div>
+    <Toaster />
     <div className="flex min-h-screen items-center justify-center p-6 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="w-full max-w-6xl">
         <div className="text-center mb-3 w-full">
@@ -245,9 +248,9 @@ export default function ContactForm() {
               </pre>
             </div>
           </div>
-
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,78 +1,176 @@
-// components/Projects.tsx
-import { FC } from 'react';
-import { ExternalLink } from 'lucide-react'; // Ícone para o link externo
+"use client";
 
-const ProjectCard: FC<{ title: string; description: string; imageUrl: string; techStack: string[]; isImageLeft: boolean; projectLink?: string }> = 
-({ title, description, imageUrl, techStack, isImageLeft, projectLink }) => (
-  <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 ">
-    {/* Alternância da imagem e do texto */}
-    <div className={`w-full md:w-1/2 ${isImageLeft ? 'md:order-1' : 'md:order-2'}`}>
-      <img src={imageUrl} alt={title} className="w-full h-auto object-cover rounded-lg shadow-md" />
-    </div>
-    
-    <div className="w-full md:w-1/2 flex flex-col gap-4">
-      <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">{title}</h3>
-      <p className="text-gray-600 dark:text-gray-300">{description}</p>
+import { FC, useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
-      {/* Tecnologias utilizadas */}
-      <div className="flex flex-wrap gap-2">
-        {techStack.map((tech, index) => (
-          <span key={index} className="bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-gray-200 py-1 px-3 rounded-full text-sm">
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      {/* Link externo para o projeto */}
-      {projectLink && (
-        <a href={projectLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-500 dark:text-blue-400 hover:underline">
-          <ExternalLink size={20} /> Acessar projeto
-        </a>
-      )}
-    </div>
-  </div>
-);
+const projects = [
+  {
+    title: "MET Museum",
+    description:
+      "Projeto experimental desenvolvido para estudo e prática de Next.js 13+, integrando a API pública do The Metropolitan Museum of Art.",
+    repo: "#",
+    demo: "#",
+    tags: ["Next.js 15", "TypeScript", "Tailwind CSS"],
+    image: "/path-to-met-museum-image.png",
+  },
+  {
+    title: "GitHub Blog",
+    description:
+      "Aplicação React desenvolvida como parte do terceiro desafio da trilha de ReactJS do Ignite.",
+    repo: "#",
+    demo: "#",
+    tags: ["React", "TypeScript", "Styled Components"],
+    image: "/path-to-github-blog-image.png",
+  },
+  {
+    title: "Duna",
+    description:
+      "Aplicação sobre o livro e filme de Duna, com descrições sobre personagens e terminologias do universo de Frank Herbert.",
+    repo: "#",
+    demo: "#",
+    tags: ["Next.js 12", "JavaScript"],
+    image: "/path-to-duna-image.png",
+  },
+  {
+    title: "Projeto Extra 1",
+    description: "Descrição do projeto extra 1.",
+    repo: "#",
+    demo: "#",
+    tags: ["Tag1", "Tag2"],
+    image: "/path-to-extra1-image.png",
+  },
+  {
+    title: "Projeto Extra 2",
+    description: "Descrição do projeto extra 2.",
+    repo: "#",
+    demo: "#",
+    tags: ["Tag1", "Tag3"],
+    image: "/path-to-extra2-image.png",
+  },
+  // Adicione mais projetos se necessário
+];
 
 const Projects: FC = () => {
-  const projects = [
-    {
-      title: "Fiskil",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec urna ac tellus volutpat viverra.",
-      imageUrl: "/images/Picture.png",
-      techStack: ['React', 'Next.js', 'Typescript', 'Nest.js', 'PostgreSQL', 'TailwindCSS', 'Figma', 'Cypress', 'Storybook', 'Git'],
-      projectLink: "https://github.com/seu-repositorio"
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Configuração do slider: 3 cards por vez em desktop,
+  // 2 em tamanhos intermediários e 1 em mobile.
+  const [sliderRef, instanceRef] = useKeenSlider({
+    loop: false,
+    mode: "snap",
+    slides: { perView: 3, spacing: 24 },
+    breakpoints: {
+      "(max-width: 768px)": {
+        slides: { perView: 1, spacing: 16 },
+      },
+      "(min-width: 769px) and (max-width: 1024px)": {
+        slides: { perView: 2, spacing: 24 },
+      },
     },
-    {
-      title: "Outro Projeto",
-      description: "Descrição do segundo projeto com detalhes relevantes.",
-      imageUrl: "/images/Picture.png",
-      techStack: ['Vue.js', 'Vuetify', 'Node.js', 'MongoDB'],
-      projectLink: "https://github.com/seu-outro-projeto"
-    }
-  ];
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel);
+    },
+  });
+
+  // Cálculo dos indicadores (dots) para 3 cards visíveis.
+  const totalDots = projects.length - 3 + 1;
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 ">
-      <div className="w-full max-w-5xl space-y-12">
-        {/* Título Centralizado */}
+    <div className="flex min-h-screen items-center justify-center p-6 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="w-full max-w-6xl space-y-12">
+        {/* Cabeçalho */}
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl text-blue-500 font-semibold mb-3">{"> "} Projects</h2>
-          <p className="text-lg md:text-xl text-gray-800 dark:text-gray-200">escrever alguma mensagem aqui:</p>
+        <h2 className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 font-semibold mb-5">{"> "} Projects</h2>
+            <p className="text-center mb-12 text-lg text-gray-700 dark:text-gray-300">
+                Escrever algo aqui:
+            </p>
         </div>
 
-      <div className="flex flex-col gap-10">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            title={project.title}
-            description={project.description}
-            imageUrl={project.imageUrl}
-            techStack={project.techStack}
-            isImageLeft={index % 2 === 0}
-            projectLink={project.projectLink}
-          />
-        ))}
-       </div>
+        {/* Slider */}
+        <div className="relative">
+          {/* Botão de Navegação Esquerdo (oculto em mobile) */}
+          <button
+            className="hidden md:block absolute -left-12 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-600 transition dark:bg-gray-600 dark:hover:bg-gray-500"
+            onClick={() => instanceRef.current?.prev()}
+          >
+            <ChevronLeft size={28} />
+          </button>
+
+          <div ref={sliderRef} className="keen-slider">
+            {projects.map((project, index) => (
+              <div key={index} className="keen-slider__slide p-4">
+                <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                      {project.title}
+                    </h3>
+                    <p className="mt-3 text-gray-600 dark:text-gray-400">
+                      {project.description}
+                    </p>
+                    <div className="mt-4 flex gap-4">
+                      <a
+                        href={project.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <ExternalLink size={16} className="mr-1" /> Repositório
+                      </a>
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <ExternalLink size={16} className="mr-1" /> Demo
+                      </a>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="bg-blue-600 dark:bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Botão de Navegação Direito (oculto em mobile) */}
+          <button
+            className="hidden md:block absolute -right-12 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-600 transition dark:bg-gray-600 dark:hover:bg-gray-500"
+            onClick={() => instanceRef.current?.next()}
+          >
+            <ChevronRight size={28} />
+          </button>
+        </div>
+
+        {/* Indicadores (Dots) */}
+        <div className="flex justify-center gap-2">
+          {Array.from({ length: totalDots }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => instanceRef.current?.moveToIdx(index)}
+              className={`h-3 w-3 rounded-full transition ${
+                currentSlide === index
+                  ? "bg-blue-600"
+                  : "bg-gray-400 hover:bg-gray-500"
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
