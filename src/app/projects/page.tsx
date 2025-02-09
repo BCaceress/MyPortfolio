@@ -13,7 +13,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Next.js 15", "TypeScript", "Tailwind CSS"],
-    image: "/path-to-met-museum-image.png",
+    image: "https://img.freepik.com/fotos-gratis/feliz-empresario-afro-americano-usando-telefone-celular-e-cartao-de-credito-de-pagamentos-online-enquanto-trabalhava-a-noite-no-escritorio_637285-2545.jpg?t=st=1738976256~exp=1738979856~hmac=e4ba2139e961db303c97a91e49d256991722f4da3bd90ba7e708c3ff7e772b4c&w=740",
   },
   {
     title: "GitHub Blog",
@@ -22,7 +22,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["React", "TypeScript", "Styled Components"],
-    image: "/path-to-github-blog-image.png",
+    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
   },
   {
     title: "Duna",
@@ -31,7 +31,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Next.js 12", "JavaScript"],
-    image: "/path-to-duna-image.png",
+    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
   },
   {
     title: "Projeto Extra 1",
@@ -39,7 +39,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Tag1", "Tag2"],
-    image: "/path-to-extra1-image.png",
+    image: "https://img.freepik.com/fotos-gratis/feliz-empresario-afro-americano-usando-telefone-celular-e-cartao-de-credito-de-pagamentos-online-enquanto-trabalhava-a-noite-no-escritorio_637285-2545.jpg?t=st=1738976256~exp=1738979856~hmac=e4ba2139e961db303c97a91e49d256991722f4da3bd90ba7e708c3ff7e772b4c&w=740",
   },
   {
     title: "Projeto Extra 2",
@@ -47,7 +47,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Tag1", "Tag3"],
-    image: "/path-to-extra2-image.png",
+    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
   },
   // Adicione mais projetos se necessário
 ];
@@ -84,7 +84,7 @@ const Projects: FC = () => {
         <div className="text-center">
         <h2 className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 font-semibold mb-5">{"> "} Projects</h2>
             <p className="text-center mb-12 text-lg text-gray-700 dark:text-gray-300">
-                Escrever algo aqui:
+            A Showcase of Creativity, Problem-Solving, and Technical Excellence!
             </p>
         </div>
 
@@ -100,51 +100,52 @@ const Projects: FC = () => {
 
           <div ref={sliderRef} className="keen-slider">
             {projects.map((project, index) => (
-              <div key={index} className="keen-slider__slide p-4">
-                <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 text-gray-600 dark:text-gray-400">
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex gap-4">
-                      <a
-                        href={project.repo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        <ExternalLink size={16} className="mr-1" /> Repositório
-                      </a>
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        <ExternalLink size={16} className="mr-1" /> Demo
-                      </a>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tags.map((tag, i) => (
-                        <span
-                          key={i}
-                          className="bg-blue-600 dark:bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+             <div key={index} className="keen-slider__slide p-4">
+             <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+               <img
+                 src={project.image}
+                 alt={project.title}
+                 className="w-full h-48 object-cover"
+               />
+               <div className="p-6 flex flex-col flex-1">
+                 <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                   {project.title}
+                 </h3>
+                 <p className="mt-3 text-gray-600 dark:text-gray-400 flex-1">
+                   {project.description}
+                 </p>
+                 <div className="mt-4 flex gap-4">
+                   <a
+                     href={project.repo}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                   >
+                     <ExternalLink size={16} className="mr-1" /> Repositório
+                   </a>
+                   <a
+                     href={project.demo}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                   >
+                     <ExternalLink size={16} className="mr-1" /> Demo
+                   </a>
+                 </div>
+                 <div className="mt-4 flex flex-wrap gap-2">
+                   {project.tags.map((tag, i) => (
+                     <span
+                       key={i}
+                       className="bg-blue-600 dark:bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                     >
+                       {tag}
+                     </span>
+                   ))}
+                 </div>
+               </div>
+             </div>
+           </div>
+           
             ))}
           </div>
 
