@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  // Define darkMode como true inicialmente para iniciar no modo escuro
+  
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("theme") === "dark" || true; // Inicia com modo escuro, ou respeita o tema salvo
+      return localStorage.getItem("theme") === "dark" || true; 
     }
-    return true; // Retorna `true` se não houver acesso ao localStorage (seria no lado do servidor)
+    return true; 
   });
   
 
@@ -30,7 +30,7 @@ export default function Navbar() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setMenuOpen(false); // Fecha o menu após a seleção em telas menores
+    setMenuOpen(false); 
   };
 
   return (
