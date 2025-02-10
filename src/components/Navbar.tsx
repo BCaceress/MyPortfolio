@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
-import Link from "next/link";
+//import Link from "next/link";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(() => {

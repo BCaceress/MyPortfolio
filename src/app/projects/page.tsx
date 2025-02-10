@@ -3,6 +3,7 @@
 import { FC, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 const projects = [
@@ -102,11 +103,12 @@ const Projects: FC = () => {
             {projects.map((project, index) => (
              <div key={index} className="keen-slider__slide p-4">
              <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-               <img
-                 src={project.image}
-                 alt={project.title}
-                 className="w-full h-48 object-cover"
-               />
+             <Image
+    src={project.image}
+    alt={project.title}
+    fill
+    className="object-cover"
+  />
                <div className="p-6 flex flex-col flex-1">
                  <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                    {project.title}

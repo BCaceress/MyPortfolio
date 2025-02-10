@@ -76,7 +76,7 @@ export default function ContactForm() {
           </h2>
         </div>
         <p className="text-center mb-12 text-lg">
-          What’s next? Feel free to reach out if you're looking for a developer,
+          What&apos;s next? Feel free to reach out if you&apos;re looking for a developer,
           have a query, or simply want to connect.
         </p>
 
@@ -195,11 +195,11 @@ export default function ContactForm() {
                 <code>
                   <span className="text-gray-400">1 </span>
                   <span className="text-purple-400"> const</span> sendEmailBtn = document.querySelector
-                  <span className="text-yellow-400">("#sendEmailBtn")</span>;
+                  <span className="text-yellow-400">(&quot;#sendEmailBtn&quot;)</span>;
                   <br />
                   <span className="text-gray-400">2 </span>
                   <span className="text-purple-400"> const</span> sendWhatsBtn = document.querySelector
-                  <span className="text-yellow-400">("#sendWhatsBtn")</span>;
+                  <span className="text-yellow-400">(&quot;#sendWhatsBtn&quot;)</span>;
                   <br />
                   <span className="text-gray-400">3 </span>
                   <br />
@@ -207,16 +207,16 @@ export default function ContactForm() {
                   <span className="text-purple-400"> const</span> message = {'{' }
                   <br />
                   <span className="text-gray-400">5 </span>
-                  &nbsp;&nbsp; name: <span className="text-green-400">"{formData.name || 'Your Name'}"</span>,
+                  &nbsp;&nbsp; name: <span className="text-green-400">&quot;{formData.name || 'Your Name'}&quot;</span>,
                   <br />
                   <span className="text-gray-400">6 </span>
-                  &nbsp;&nbsp; email: <span className="text-green-400">"{formData.email || 'your-email@example.com'}"</span>,
+                  &nbsp;&nbsp; email: <span className="text-green-400">&quot;{formData.email || 'your-email@example.com'}&quot;</span>,
                   <br />
                   <span className="text-gray-400">7 </span>
-                  &nbsp;&nbsp; message: <span className="text-green-400">"{formData.message || 'Your message...'}"</span>,
+                  &nbsp;&nbsp; message: <span className="text-green-400">&quot;{formData.message || 'Your message...'}&quot;</span>,
                   <br />
                   <span className="text-gray-400">8 </span>
-                  &nbsp;&nbsp; date: <span className="text-green-400">"{new Date().toDateString()}"</span>
+                  &nbsp;&nbsp; date: <span className="text-green-400">&quot;{new Date().toDateString()}&quot;</span>
                   <br />
                   <span className="text-gray-400">9 </span>
                   {' }'};
@@ -225,7 +225,7 @@ export default function ContactForm() {
                   <br />
                   <span className="text-gray-400">11 </span>
                   sendEmailBtn.addEventListener
-                  <span className="text-yellow-400">('click'</span>, () =&gt; {'{' }
+                  <span className="text-yellow-400">(&apos;click&apos;</span>, () =&gt; {'{' }
                   <br />
                   <span className="text-gray-400">12 </span>
                   &nbsp;&nbsp; form.sendEmail(message);
@@ -237,7 +237,7 @@ export default function ContactForm() {
                   <br />
                   <span className="text-gray-400">15 </span>
                   sendWhatsBtn.addEventListener
-                  <span className="text-yellow-400">('click'</span>, () =&gt; {'{' }
+                  <span className="text-yellow-400">(&apos;click&apos;</span>, () =&gt; {'{' }
                   <br />
                   <span className="text-gray-400">16 </span>
                   &nbsp;&nbsp; form.sendWhatsApp(message);

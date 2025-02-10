@@ -78,13 +78,13 @@ export default function AboutMe() {
                 &nbsp; /*
                 <br />
                 <span className="text-gray-500">2 </span>
-                &nbsp;&nbsp;  * Hi! I'm a full-stack developer with over 7 years of
+                &nbsp;&nbsp;  * Hi! I&apos;m a full-stack developer with over 7 years of
                 <br />
                 <span className="text-gray-500">3 </span>
                 &nbsp;&nbsp;  * experience, and for the past 2 years,
                 <br />
                 <span className="text-gray-500">4 </span>
-                &nbsp;&nbsp;  * I've also been diving into the mobile world with
+                &nbsp;&nbsp;  * I&apos;ve also been diving into the mobile world with
                 <br />
                 <span className="text-gray-500">5 </span>
                 &nbsp;&nbsp;  * React Native. My journey in technology started back 
@@ -102,7 +102,7 @@ export default function AboutMe() {
                 &nbsp;&nbsp;  * long-awaited degree in Internet Systems at Faculdade
                 <br />
                 <span className="text-gray-500">10</span>
-                &nbsp;&nbsp;  * Feevale, and now I keep challenging myself as I'm in
+                &nbsp;&nbsp;  * Feevale, and now I keep challenging myself as I&apos;m in
                 <br />
                 <span className="text-gray-500">11</span>
                 &nbsp;&nbsp;  * the 4th module of my Full Stack post-graduation.
@@ -111,7 +111,7 @@ export default function AboutMe() {
                 &nbsp;&nbsp;  * 
                 <br />
                 <span className="text-gray-500">13</span>
-                &nbsp;&nbsp;  * I'm passionate about creating innovative solutions 
+                &nbsp;&nbsp;  * I&apos;m passionate about creating innovative solutions 
                 <br />
                 <span className="text-gray-500">14 </span>
                 &nbsp;&nbsp; * and always looking to learn something new. Recently, 
@@ -129,7 +129,7 @@ export default function AboutMe() {
                 &nbsp;&nbsp; 
                 <br />
                 <span className="text-gray-500">19 </span>
-                &nbsp;&nbsp; * But life isn't just about coding, right? In my free 
+                &nbsp;&nbsp; * But life isn&apos;t just about coding, right? In my free 
                 <br />
                 <span className="text-gray-500">20 </span>
                 &nbsp;&nbsp; * time, I love traveling, playing sports, gaming, and
