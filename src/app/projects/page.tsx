@@ -14,7 +14,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Next.js 15", "TypeScript", "Tailwind CSS"],
-    image: "https://img.freepik.com/fotos-gratis/feliz-empresario-afro-americano-usando-telefone-celular-e-cartao-de-credito-de-pagamentos-online-enquanto-trabalhava-a-noite-no-escritorio_637285-2545.jpg?t=st=1738976256~exp=1738979856~hmac=e4ba2139e961db303c97a91e49d256991722f4da3bd90ba7e708c3ff7e772b4c&w=740",
+    image: "",
   },
   {
     title: "GitHub Blog",
@@ -23,7 +23,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["React", "TypeScript", "Styled Components"],
-    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
+    image: "",
   },
   {
     title: "Duna",
@@ -32,7 +32,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Next.js 12", "JavaScript"],
-    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
+    image: "",
   },
   {
     title: "Projeto Extra 1",
@@ -40,7 +40,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Tag1", "Tag2"],
-    image: "https://img.freepik.com/fotos-gratis/feliz-empresario-afro-americano-usando-telefone-celular-e-cartao-de-credito-de-pagamentos-online-enquanto-trabalhava-a-noite-no-escritorio_637285-2545.jpg?t=st=1738976256~exp=1738979856~hmac=e4ba2139e961db303c97a91e49d256991722f4da3bd90ba7e708c3ff7e772b4c&w=740",
+    image: "",
   },
   {
     title: "Projeto Extra 2",
@@ -48,7 +48,7 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Tag1", "Tag3"],
-    image: "https://img.freepik.com/fotos-gratis/freelancer-feliz-com-tablet-e-laptop-em-uma-cafeteria_342744-942.jpg?t=st=1738976294~exp=1738979894~hmac=84721ef984b8234ceccff7b3e242cddb2f8e1a70e529ce99987b97b7707bfd86&w=740",
+    image: "",
   },
   // Adicione mais projetos se necessário
 ];
@@ -79,7 +79,7 @@ const Projects: FC = () => {
   const totalDots = projects.length - 3 + 1;
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="flex min-h-screen items-center justify-center p-6 bg-[#f4f4f4] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-300">
       <div className="w-full max-w-6xl space-y-12">
         {/* Cabeçalho */}
         <div className="text-center">
@@ -106,7 +106,7 @@ const Projects: FC = () => {
              <Image
     src={project.image}
     alt={project.title}
-    fill
+    
     className="object-cover"
   />
                <div className="p-6 flex flex-col flex-1">

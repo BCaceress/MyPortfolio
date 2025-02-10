@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function AboutMe() {
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
+    <div className="flex min-h-screen items-center justify-center p-6 bg-[#f4f4f4] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
       <div className="w-full max-w-5xl space-y-12">
         {/* Título Centralizado */}
         <div className="text-center">
