@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -11,6 +11,8 @@ export default function Navbar() {
     }
     return false;
   });
+
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -27,18 +29,23 @@ export default function Navbar() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    setMenuOpen(false); // Fecha o menu após a seleção em telas menores
   };
 
-
   return (
-    <nav className=" fixed  top-0 left-0 w-full flex items-center justify-between px-8 py-4 bg-white dark:bg-dark-bg shadow-md transition-colors duration-300 z-50">
+    <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-dark-bg shadow-md transition-colors duration-300 z-50">
       <div className="text-xl font-bold text-gray-900 dark:text-white">
         <span className="text-black dark:text-white">&lt;BC /&gt;</span>
       </div>
 
-      <div className="flex items-center space-x-6">
+      {/* Botão de menu para telas menores */}
+      <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-gray-700 dark:text-gray-300 p-2 rounded-md">
+        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      <div className={`absolute md:static top-16 left-0 w-full md:w-auto bg-white dark:bg-dark-bg md:flex md:items-center md:space-x-6 p-4 md:p-0 shadow-md md:shadow-none transition-transform duration-300 ${menuOpen ? "block" : "hidden"}`}>
         {/* Links */}
-        <ul className="flex space-x-6 text-gray-700 dark:text-gray-300">
+        <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-gray-700 dark:text-gray-300">
           <li>
             <button onClick={() => handleScroll("home")} className="hover:text-gray-500 dark:hover:text-gray-400">
               _hello
@@ -66,24 +73,26 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <div className="w-px h-4 bg-gray-700"></div>
+        <div className="border-t border-gray-300 dark:border-gray-600 my-4 md:hidden"></div>
 
-        {/* Theme Toggle */}
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
-        >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+          >
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
 
-        {/* Download CV */}
-        <a
-          href="/path-to-cv.pdf"
-          download
-          className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-700"
-        >
-          Download CV
-        </a>
+          {/* Download CV */}
+          <a
+            href="/path-to-cv.pdf"
+            download
+            className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-700 mt-2 md:mt-0"
+          >
+            Download CV
+          </a>
+        </div>
       </div>
     </nav>
   );

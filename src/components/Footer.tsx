@@ -2,11 +2,11 @@ import { Instagram, Facebook, Linkedin, Github, Heart } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bottom-0 w-full bg-light-bg dark:bg-dark-bg text-gray-300 p-3 flex items-center justify-between border-transparent dark:border-gray-700">
-      {/* Seção de redes sociais */}
-      <div className="flex items-center px-4">
-        <span className="text-sm mr-2 text-gray-600 dark:text-gray-300">find me in:</span>
-        <div className="flex gap-4">
+    <footer className="w-full bg-light-bg dark:bg-dark-bg text-gray-300 p-4 flex flex-col md:flex-row items-center justify-between border-t border-gray-300 dark:border-gray-700 backdrop-blur-sm bg-opacity-80">
+      {/* Seção de Redes Sociais */}
+      <div className="flex items-center gap-3 mb-3 md:mb-0">
+        <span className="text-sm text-gray-600 dark:text-gray-300">find me in:</span>
+        <div className="flex items-center gap-3">
           <a
             href="https://www.instagram.com/brunocaceress"
             target="_blank"
@@ -15,7 +15,6 @@ export default function Footer() {
           >
             <Instagram size={18} className="text-gray-500 dark:text-gray-400" />
           </a>
-          <div className="w-px h-4 bg-gray-700"></div>
           <a
             href="https://www.facebook.com/brunocaceress"
             target="_blank"
@@ -24,7 +23,6 @@ export default function Footer() {
           >
             <Facebook size={18} className="text-gray-500 dark:text-gray-400" />
           </a>
-          <div className="w-px h-4 bg-gray-700"></div>
           <a
             href="https://www.linkedin.com/in/brunocaceress/"
             target="_blank"
@@ -37,12 +35,12 @@ export default function Footer() {
       </div>
 
       {/* Texto Centralizado */}
-      <div className="flex-1 text-center text-sm text-gray-600 dark:text-gray-400">
+      <div className="text-center text-sm text-gray-600 dark:text-gray-400 mb-3 md:mb-0">
         2025 | Designed and coded with <Heart size={16} className="inline text-red-500" /> by Bruno Caceres
       </div>
 
       {/* Seção do GitHub */}
-      <div className="px-4">
+      <div className="flex items-center gap-2">
         <a
           href="https://github.com/BCaceress"
           target="_blank"

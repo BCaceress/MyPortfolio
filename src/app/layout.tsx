@@ -10,7 +10,7 @@ import Skills from "@/app/skills/page";
 import Projects from "@/app/projects/page";
 
 export const metadata: Metadata = {
-  title: "Bruno Cacerees Portfólio",
+  title: "Bruno Caceres Portfólio",
   description: "Portfólio de Bruno Caceres - Desenvolvedor Web e Mobile",
   icons: {
     icon: "/favicon.ico",
