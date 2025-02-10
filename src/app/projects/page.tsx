@@ -8,31 +8,29 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 const projects = [
   {
-    title: "MET Museum",
+    title: "Sistema de Suporte e Monitoramento",
     description:
-      "Projeto experimental desenvolvido para estudo e prática de Next.js 13+, integrando a API pública do The Metropolitan Museum of Art.",
-    repo: "#",
-    demo: "#",
-    tags: ["Next.js 15", "TypeScript", "Tailwind CSS"],
-    image: "",
+      "Desenvolvido em 2019,  este sistema foi criado para otimizar o trabalho da equipe de suporte da empresa, integrando APIs para cadastro de clientes, alertas críticos, repositório de documentos e vários dashboards de monitoramento em tempo real. Ainda ativo, é essencial para a gestão e suporte.",
+    tags: ["Laravel", "Bootstrap", "MySql"],
+    image: "/images/projetos/ProjetoSawluz.jpg",
   },
   {
-    title: "GitHub Blog",
+    title: "Site Psicóloga",
     description:
-      "Aplicação React desenvolvida como parte do terceiro desafio da trilha de ReactJS do Ignite.",
-    repo: "#",
-    demo: "#",
-    tags: ["React", "TypeScript", "Styled Components"],
-    image: "",
+      "Site profissional da psicóloga Simone Caceres, apresentando sua trajetória, abordagem terapêutica e local de atendimento. Conta com um blog com conteúdos sobre saúde mental e links para contato e agendamentos.",
+    //repo: "#",
+    demo: "https://www.psicologasimonecaceres.com.br/",
+    tags: ["React", "TypeScript", "Tailwind"],
+    image: "/images/projetos/ProjetoSimoneCaceres.png",
   },
   {
-    title: "Duna",
+    title: "CLT400 - Gestão de Produção Industrial",
     description:
-      "Aplicação sobre o livro e filme de Duna, com descrições sobre personagens e terminologias do universo de Frank Herbert.",
-    repo: "#",
-    demo: "#",
-    tags: ["Next.js 12", "JavaScript"],
-    image: "",
+      "Sistema em desenvolvimento para otimizar o controle da produção industrial. Permite visualizar ordens de fabricação, registrar apontamentos de postos e processos, além de gerenciar a lista de produtos, materiais e pedidos. Projetado para facilitar a operação e o monitoramento da linha de produção.",
+    //repo: "#",
+    //demo: "#",
+    tags: ["React Native", "JavaScript"],
+    image: "/images/projetos/ProjetoColetclt400.png",
   },
   {
     title: "Projeto Extra 1",
@@ -40,24 +38,13 @@ const projects = [
     repo: "#",
     demo: "#",
     tags: ["Tag1", "Tag2"],
-    image: "",
-  },
-  {
-    title: "Projeto Extra 2",
-    description: "Descrição do projeto extra 2.",
-    repo: "#",
-    demo: "#",
-    tags: ["Tag1", "Tag3"],
-    image: "",
-  },
+    image: "/images/projetos/ProjetoSawluz.jpg",
+  }
   // Adicione mais projetos se necessário
 ];
 
 const Projects: FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Configuração do slider: 3 cards por vez em desktop,
-  // 2 em tamanhos intermediários e 1 em mobile.
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: false,
     mode: "snap",
@@ -104,11 +91,12 @@ const Projects: FC = () => {
              <div key={index} className="keen-slider__slide p-4">
              <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
              <Image
-    src={project.image}
-    alt={project.title}
-    
-    className="object-cover"
-  />
+                src={project.image}
+                alt={project.title}
+                width={600} 
+                height={400} 
+               className="w-full aspect-video object-cover"
+              />
                <div className="p-6 flex flex-col flex-1">
                  <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                    {project.title}
@@ -117,23 +105,27 @@ const Projects: FC = () => {
                    {project.description}
                  </p>
                  <div className="mt-4 flex gap-4">
-                   <a
-                     href={project.repo}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
-                   >
-                     <ExternalLink size={16} className="mr-1" /> Repositório
-                   </a>
-                   <a
-                     href={project.demo}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
-                   >
-                     <ExternalLink size={16} className="mr-1" /> Demo
-                   </a>
-                 </div>
+                  {project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      <ExternalLink size={16} className="mr-1" /> Repositório
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      <ExternalLink size={16} className="mr-1" /> Demo
+                    </a>
+                  )}
+                </div>
                  <div className="mt-4 flex flex-wrap gap-2">
                    {project.tags.map((tag, i) => (
                      <span
