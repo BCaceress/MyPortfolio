@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
-//import Link from "next/link";
 
 export default function Navbar() {
-  const [darkMode, setDarkMode] = useState(() => {
+  // Define darkMode como true inicialmente para iniciar no modo escuro
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("theme") === "dark";
+      return localStorage.getItem("theme") === "dark" || true; // Inicia com modo escuro, ou respeita o tema salvo
     }
-    return false;
+    return true; // Retorna `true` se não houver acesso ao localStorage (seria no lado do servidor)
   });
+  
 
   const [menuOpen, setMenuOpen] = useState(false);
 

@@ -9,7 +9,7 @@ export default function HomeSection() {
       {/* Text Content */}
       <div className="max-w-3xl">
         <p className="text-gray-600 dark:text-gray-400 text-2xl">Hello World. I am</p>
-        <h1 className="text-6xl font-extrabold text-gray-900 dark:text-white">Bruno Caceress</h1>
+        <h1 className="text-6xl font-extrabold text-gray-900 dark:text-white">Bruno Caceres</h1>
         <h2 className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 font-semibold mt-2">
           {"> "} Full Stack Developer
         </h2>
