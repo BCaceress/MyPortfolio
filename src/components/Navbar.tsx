@@ -77,17 +77,14 @@ export default function Navbar() {
         <div className="border-t border-gray-300 dark:border-gray-600 my-4 md:hidden"></div>
 
         <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
-          {/* Theme Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-
-          {/* Download CV */}
           <a
-            href="/path-to-cv.pdf"
+            href="/PDF/BrunoCaceresCurrículo.pdf"
             download
             className="bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-700 mt-2 md:mt-0"
           >
