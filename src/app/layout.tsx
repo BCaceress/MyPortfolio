@@ -7,6 +7,7 @@ import AboutMe from "@/app/about-me/page";
 import ContactMe from "@/app/contact-me/page";
 import Skills from "@/app/skills/page";
 import Projects from "@/app/projects/page";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Bruno Caceres Portfólio",
@@ -19,28 +20,30 @@ export const metadata: Metadata = {
 
 export default function Portfolio() {
   return (
-    <html lang="pt-BR" className="dark"> {/* Aplica o modo escuro por padrão */}
-      <body className="min-h-screen flex flex-col bg-dark-bg text-white transition-colors duration-300">
-        <Navbar />
-        <main className="flex-grow">
-          <section id="home">
-            <Hello />
-          </section>
-          <section id="about">
-            <AboutMe />
-          </section>
-          <section id="skills">
-            <Skills />
-          </section>
-          <section id="projects">
-            <Projects />
-          </section>
-          <section id="contact">
-            <ContactMe />
-          </section>
-        </main>
-        <Footer />
-      </body>
-    </html>
+    <LanguageProvider>
+      <html lang="pt-BR" className="dark">
+        <body className="min-h-screen flex flex-col bg-dark-bg text-white transition-colors duration-300">
+          <Navbar />
+          <main className="flex-grow">
+            <section id="home">
+              <Hello />
+            </section>
+            <section id="about">
+              <AboutMe />
+            </section>
+            <section id="skills">
+              <Skills />
+            </section>
+            <section id="projects">
+              <Projects />
+            </section>
+            <section id="contact">
+              <ContactMe />
+            </section>
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </LanguageProvider>
   );
 }

@@ -66,12 +66,12 @@ const Projects: FC = () => {
   const totalDots = projects.length - 3 + 1;
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 bg-[#f4f4f4] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-300">
-      <div className="w-full max-w-6xl space-y-12">
+    <div className="flex min-h-screen items-center justify-center p-3 bg-[#f4f4f4] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="w-full max-w-6xl space-y-8">
         {/* Cabeçalho */}
         <div className="text-center">
         <h2 className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 font-semibold mb-5">{"> "} Projects</h2>
-            <p className="text-center mb-12 text-lg text-gray-700 dark:text-gray-300">
+            <p className="text-center mb-8 text-lg text-gray-700 dark:text-gray-300">
             A Showcase of Creativity, Problem-Solving, and Technical Excellence!
             </p>
         </div>
@@ -88,7 +88,7 @@ const Projects: FC = () => {
 
           <div ref={sliderRef} className="keen-slider">
             {projects.map((project, index) => (
-             <div key={index} className="keen-slider__slide p-4">
+             <div key={index} className="keen-slider__slide p-2">
              <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
              <Image
                 src={project.image}
@@ -97,7 +97,7 @@ const Projects: FC = () => {
                 height={400} 
                className="w-full aspect-video object-cover"
               />
-               <div className="p-6 flex flex-col flex-1">
+               <div className="p-4 flex flex-col flex-1">
                  <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                    {project.title}
                  </h3>
