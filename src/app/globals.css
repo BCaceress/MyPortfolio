@@ -92,12 +92,82 @@
         }
     }
 
+    @keyframes codeTyping {
+        0% {
+            width: 0;
+        }
+
+        50% {
+            width: 40px;
+        }
+
+        100% {
+            width: 40px;
+        }
+    }
+
+    @keyframes codeTypingDelayed {
+
+        0%,
+        30% {
+            width: 0;
+        }
+
+        80% {
+            width: 50px;
+        }
+
+        100% {
+            width: 50px;
+        }
+    }
+
+    @keyframes loadingText {
+        0% {
+            clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+        }
+
+        100% {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+    }
+
+    @keyframes keyPress {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(2px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
     .animate-fadeIn {
         animation: fadeIn 0.7s ease-in-out forwards;
     }
 
     .animate-loadingBar {
         animation: loadingBar 1.5s infinite;
+    }
+
+    .animate-codeTyping {
+        animation: codeTyping 2s infinite alternate;
+    }
+
+    .animate-codeTyping-delayed {
+        animation: codeTypingDelayed 3s infinite alternate;
+    }
+
+    .animate-loadingText {
+        animation: loadingText 1s steps(15) forwards;
+    }
+
+    .animate-keyPress {
+        animation: keyPress 0.15s ease-in-out forwards;
     }
 
     .bg-gradient-green {
