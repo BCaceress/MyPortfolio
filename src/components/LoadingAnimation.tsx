@@ -41,7 +41,7 @@ const LoadingAnimation = () => {
                 return () => clearTimeout(typingTimeout);
             }
         }
-    }, [typedText, fullText]);
+    }, [typedText, fullText, keyboardKeys]);
 
     useEffect(() => {
         // Start typing after a short delay
@@ -140,8 +140,8 @@ const LoadingAnimation = () => {
                                     height="16"
                                     rx="3"
                                     className={`${keyboardKeys.find(k => k.x === (27 + i * 20) && k.y === 30)?.id === activeKey
-                                            ? 'fill-blue-400 dark:fill-green-500'
-                                            : 'fill-gray-100 dark:fill-gray-600'
+                                        ? 'fill-blue-400 dark:fill-green-500'
+                                        : 'fill-gray-100 dark:fill-gray-600'
                                         } stroke-gray-300 dark:stroke-gray-500`}
                                     filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
                                 />
@@ -167,8 +167,8 @@ const LoadingAnimation = () => {
                                     height="16"
                                     rx="3"
                                     className={`${keyboardKeys.find(k => k.x === (37 + i * 20) && k.y === 50)?.id === activeKey
-                                            ? 'fill-blue-400 dark:fill-green-500'
-                                            : 'fill-gray-100 dark:fill-gray-600'
+                                        ? 'fill-blue-400 dark:fill-green-500'
+                                        : 'fill-gray-100 dark:fill-gray-600'
                                         } stroke-gray-300 dark:stroke-gray-500`}
                                     filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
                                 />

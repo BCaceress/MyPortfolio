@@ -91,7 +91,7 @@ interface SocialLink {
 }
 
 export default function HomeSection() {
-  const [isLoading, setIsLoading] = useState(true);
+  // Removed the unused isLoading state
   const jobTitle = useTypewriter(['Front-end developer', 'Mobile developer', 'UI/UX Enthusiast'], 150, 100, 2000);
 
   // References for scroll animations
@@ -106,11 +106,7 @@ export default function HomeSection() {
   const y2 = useTransform(scrollY, [0, 500], [0, -50]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.3]);
 
-  // Loading effect on initial render
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+  // Removed the unused loading effect useEffect
 
   // Scroll to next section function
   const scrollToNextSection = useCallback(() => {

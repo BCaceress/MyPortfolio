@@ -626,7 +626,7 @@ const Projects: FC = () => {
     const isBeginning = currentSlide === 0;
     const isEnd = currentSlide === totalDots - 1;
     return { totalDots, isBeginning, isEnd };
-  }, [currentSlide, projects.length, slidesPerView.desktop]);
+  }, [currentSlide, slidesPerView.desktop]);
 
   // Callbacks para navegação
   const handlePrev = useCallback(() => instanceRef.current?.prev(), [instanceRef]);
