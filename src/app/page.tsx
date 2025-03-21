@@ -86,11 +86,13 @@ interface SocialLink {
   href: string;
   icon: LucideIcon;
   hoverColor: string;
+  hoverBgColor: string;
   ariaLabel: string;
 }
 
 export default function HomeSection() {
-  const jobTitle = useTypewriter(['Front-end developer', 'Mobile developer'], 150, 100, 2000);
+  const [isLoading, setIsLoading] = useState(true);
+  const jobTitle = useTypewriter(['Front-end developer', 'Mobile developer', 'UI/UX Enthusiast'], 150, 100, 2000);
 
   // References for scroll animations
   const terminalReveal = useScrollReveal({ threshold: 0.2 });
@@ -118,36 +120,41 @@ export default function HomeSection() {
     }
   }, []);
 
-  // Array of social links
+  // Array of social links with specific brand colors for hover
   const socialLinks: SocialLink[] = [
     {
       href: "https://github.com/BCaceress",
       icon: Github,
-      hoverColor: "gray-900",
+      hoverColor: "text-white",
+      hoverBgColor: "bg-gray-900",
       ariaLabel: "GitHub Profile"
     },
     {
       href: "https://www.linkedin.com/in/brunocaceress/",
       icon: Linkedin,
-      hoverColor: "[#0077B5]",
+      hoverColor: "text-white",
+      hoverBgColor: "bg-[#0077B5]",
       ariaLabel: "LinkedIn Profile"
     },
     {
       href: "https://www.instagram.com/brunocaceress/#",
       icon: Instagram,
-      hoverColor: "[#E1306C]",
+      hoverColor: "text-white",
+      hoverBgColor: "bg-gradient-to-tr from-[#E1306C] to-[#833AB4]",
       ariaLabel: "Instagram Profile"
     },
     {
       href: "https://www.facebook.com/brunocaceress",
       icon: Facebook,
-      hoverColor: "[#1877F2]",
+      hoverColor: "text-white",
+      hoverBgColor: "bg-[#1877F2]",
       ariaLabel: "Facebook Profile"
     },
     {
       href: "https://wa.me/5551981927091",
       icon: MessageCircle,
-      hoverColor: "[#25D366]",
+      hoverColor: "text-white",
+      hoverBgColor: "bg-[#25D366]",
       ariaLabel: "WhatsApp Contact"
     }
   ];
@@ -179,7 +186,7 @@ export default function HomeSection() {
         className="flex flex-col items-center justify-center px-4 sm:px-8 py-16 sm:py-20 min-h-screen relative overflow-hidden"
         aria-labelledby="home-heading"
       >
-        {/* Animated Background with Parallax - Updated for theme support */}
+        {/* Animated Background with Parallax - Enhanced for visual appeal */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 z-0">
           <motion.div
             className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"
@@ -209,26 +216,26 @@ export default function HomeSection() {
           </div>
         </div>
 
-        {/* Content wrapper */}
+        {/* Content wrapper - Enhanced with improved spacing and responsive layout */}
         <motion.div
-          className="max-w-5xl mx-auto w-full z-10 relative"
+          className="max-w-6xl mx-auto w-full z-10 relative"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
         >
-          {/* Main content container */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            {/* Left side: Terminal code area */}
+          {/* Main content container with improved responsive layout */}
+          <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-12 mt-10 md:mt-0">
+            {/* Left side: Terminal code area with improved spacing and font size adjustments - Background removed */}
             <motion.div
-              className="w-full md:w-3/5 md:-ml-16 pl-0"
+              className="w-full md:w-3/5 md:-ml-16 pl-0 mt-8 md:mt-0"
               variants={itemVariants}
               ref={terminalReveal.ref}
               initial="hidden"
               animate={terminalReveal.isInView ? "visible" : "hidden"}
             >
-              <div className="backdrop-blur-sm rounded-xl">
+              <div className="backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8">
                 <motion.div
-                  className="mb-8"
+                  className="mb-6 md:mb-8"
                   ref={headerReveal.ref}
                   variants={{
                     hidden: { opacity: 0, y: 30 },
@@ -246,7 +253,7 @@ export default function HomeSection() {
                   animate={headerReveal.isInView ? "visible" : "hidden"}
                 >
                   <motion.p
-                    className="text-gray-600 dark:text-gray-400 text-2xl"
+                    className="text-gray-600 dark:text-gray-400 text-xl sm:text-2xl font-light"
                     variants={{
                       hidden: { opacity: 0, y: 20 },
                       visible: { opacity: 1, y: 0 }
@@ -256,7 +263,7 @@ export default function HomeSection() {
                   </motion.p>
                   <motion.h1
                     id="home-heading"
-                    className="text-7xl font-bold bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-800 dark:to-green-600 bg-clip-text text-transparent my-3"
+                    className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-500 dark:to-green-400 bg-clip-text text-transparent my-3 leading-tight tracking-tight"
                     variants={{
                       hidden: { opacity: 0, y: 20 },
                       visible: { opacity: 1, y: 0 }
@@ -265,7 +272,7 @@ export default function HomeSection() {
                     Bruno Caceres
                   </motion.h1>
                   <motion.p
-                    className="text-blue-600 dark:text-green-500 text-4xl flex items-center"
+                    className="text-blue-600 dark:text-green-500 text-2xl sm:text-3xl lg:text-4xl flex items-center font-medium"
                     variants={{
                       hidden: { opacity: 0, y: 20 },
                       visible: { opacity: 1, y: 0 }
@@ -278,7 +285,7 @@ export default function HomeSection() {
                 </motion.div>
 
                 <motion.div
-                  className="font-mono text-xl mt-10"
+                  className="font-mono text-base sm:text-lg mt-8 sm:mt-10 p-3 sm:p-4 rounded-lg"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: {
@@ -299,7 +306,8 @@ export default function HomeSection() {
                       href="https://github.com/BCaceress"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-orange-500 dark:text-orange-400 hover:underline"
+                      className="text-orange-500 dark:text-orange-400 hover:underline focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+                      aria-label="Visit my GitHub profile"
                     >
                       "https://github.com/BCaceress"
                     </a>
@@ -307,9 +315,9 @@ export default function HomeSection() {
                   </p>
                 </motion.div>
 
-                {/* Social links - Updated for theme support */}
+                {/* Social links - Removed background and increased size */}
                 <motion.div
-                  className="flex space-x-5 mt-8"
+                  className="flex flex-wrap gap-5 mt-8"
                   ref={socialReveal.ref}
                   variants={{
                     hidden: { opacity: 0, x: -30 },
@@ -326,23 +334,27 @@ export default function HomeSection() {
                     <motion.a
                       key={index}
                       href={link.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+                      className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-green-500 relative group"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={link.ariaLabel}
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <link.icon size={30} />
+                      <link.icon
+                        size={30}
+                        className={`group-hover:${link.hoverColor} transition-all duration-300`}
+                      />
+                      <span className={`absolute inset-0 rounded-full scale-0 group-hover:scale-100 transition-all duration-300 ${link.hoverBgColor} opacity-0 group-hover:opacity-100 -z-10`}></span>
                     </motion.a>
                   ))}
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Right side: SVG Animation */}
+            {/* Right side: SVG Animation with improved responsive display - Hidden on mobile */}
             <motion.div
-              className="w-full md:w-2/5 flex justify-center items-center"
+              className="hidden md:flex w-full md:w-2/5 justify-center items-center"
               ref={svgReveal.ref}
               variants={{
                 hidden: { opacity: 0, x: 50 },
@@ -366,8 +378,10 @@ export default function HomeSection() {
                 {/* Programming SVG Animation */}
                 <svg
                   viewBox="0 0 500 400"
-                  className="w-[150%] h-[150%] max-w-[700px]"
+                  className="w-full max-w-[500px] md:w-[150%] md:max-w-[700px]"
                   xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="Developer illustration"
                 >
                   {/* Abstract circuit board background */}
                   <motion.path
@@ -651,9 +665,9 @@ export default function HomeSection() {
           </div>
         </motion.div>
 
-        {/* Scroll down indicator - Updated for theme support */}
+        {/* Scroll down indicator - Enhanced with focus state for accessibility */}
         <motion.button
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-green-600 transition-colors z-10"
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-green-600 transition-colors z-10 shadow-md hover:shadow-lg"
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
