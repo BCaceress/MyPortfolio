@@ -260,14 +260,6 @@ export default function ContactForm() {
           animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <motion.span
-            className="inline-block text-sm uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400 mb-2"
-            initial={{ opacity: 0 }}
-            animate={isTitleInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            Get in Touch
-          </motion.span>
 
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
             <span className="text-blue-600 dark:text-blue-400 inline-block mr-3">{">"}</span>
@@ -604,7 +596,7 @@ const CodeBlock = ({
   isInView: boolean;
 }) => {
   const codeLines = [
-    { num: 1, content: <><span className="text-purple-400">const</span>{" "}<span className="text-blue-400">developerContact</span> = {"{"}</> },
+    { num: 1, content: <><span className="text-purple-400">const</span>{" "}<span className="text-blue-400"> developerContact</span> = {"{"}</> },
     { num: 2, content: <><span className="text-gray-100 ml-4">client: {"{"}</span></> },
     {
       num: 3, content: <>
@@ -647,7 +639,7 @@ const CodeBlock = ({
     {
       num: 12, content: <>
         <span className="text-purple-400">async function</span>{" "}
-        <span className="text-yellow-400">sendMessage</span>
+        <span className="text-yellow-400"> sendMessage</span>
         <span className="text-gray-100">() {"{"}</span>
       </>
     },
@@ -665,10 +657,10 @@ const CodeBlock = ({
     {
       num: 15, content: <>
         <span className="text-gray-100 ml-8">const</span>{" "}
-        <span className="text-blue-400">response</span>{" "}
+        <span className="text-blue-400"> response</span>{" "}
         <span className="text-gray-100"> = </span>
         <span className="text-purple-400">await</span>{" "}
-        <span className="text-blue-400">fetch</span>
+        <span className="text-blue-400"> fetch</span>
         <span className="text-gray-100">(</span>
         <span className="text-yellow-400">&quot;/api/contact&quot;</span>
         <span className="text-gray-100">, {"{"}</span>
@@ -695,7 +687,7 @@ const CodeBlock = ({
       num: 19, content: <>
         <span className="text-gray-100 ml-8">return </span>
         <span className="text-purple-400">await</span>{" "}
-        <span className="text-blue-400">response</span>
+        <span className="text-blue-400"> response</span>
         <span className="text-gray-100">.</span>
         <span className="text-blue-400">json</span>
         <span className="text-gray-100">();</span>

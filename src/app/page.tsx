@@ -179,19 +179,19 @@ export default function HomeSection() {
       className="flex flex-col items-center justify-center px-4 sm:px-8 py-16 sm:py-20 min-h-screen relative overflow-hidden"
       aria-labelledby="home-heading"
     >
-      {/* Animated Background with Parallax */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800 z-0">
+      {/* Animated Background with Parallax - Updated for theme support */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 z-0">
         <motion.div
           className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"
           style={{ y: y1, opacity }}
         ></motion.div>
         <div className="absolute inset-0">
           <motion.div
-            className="absolute -inset-[10px] bg-gradient-to-r from-blue-900/20 to-green-600/20 rounded-full blur-3xl opacity-30 animate-pulse"
+            className="absolute -inset-[10px] bg-gradient-to-r from-blue-400/20 to-green-400/20 dark:from-blue-900/20 dark:to-green-600/20 rounded-full blur-3xl opacity-30 animate-pulse"
             style={{ y: y2 }}
           ></motion.div>
           <motion.div
-            className="absolute -right-[300px] top-[100px] bg-gradient-to-l from-green-800/20 to-emerald-500/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
+            className="absolute -right-[300px] top-[100px] bg-gradient-to-l from-green-400/20 to-emerald-300/20 dark:from-green-800/20 dark:to-emerald-500/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
             style={{
               animationDuration: '8s',
               animationDelay: '1s',
@@ -199,7 +199,7 @@ export default function HomeSection() {
             }}
           ></motion.div>
           <motion.div
-            className="absolute -left-[300px] bottom-[100px] bg-gradient-to-r from-blue-800/20 to-teal-600/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
+            className="absolute -left-[300px] bottom-[100px] bg-gradient-to-r from-blue-400/20 to-teal-400/20 dark:from-blue-800/20 dark:to-teal-600/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
             style={{
               animationDuration: '10s',
               animationDelay: '2s',
@@ -209,18 +209,18 @@ export default function HomeSection() {
         </div>
       </div>
 
-      {/* Loading animation */}
+      {/* Loading animation - Updated for theme support */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className="flex items-center justify-center w-full h-screen absolute inset-0 z-50 bg-gray-900"
+            className="flex items-center justify-center w-full h-screen absolute inset-0 z-50 bg-white dark:bg-gray-900"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p className="text-green-500 font-mono">Loading portfolio...</p>
+              <div className="w-16 h-16 border-4 border-blue-600 dark:border-green-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-blue-600 dark:text-green-500 font-mono">Loading portfolio...</p>
             </div>
           </motion.div>
         )}
@@ -263,7 +263,7 @@ export default function HomeSection() {
                 animate={headerReveal.isInView ? "visible" : "hidden"}
               >
                 <motion.p
-                  className="text-gray-400 text-2xl"
+                  className="text-gray-600 dark:text-gray-400 text-2xl"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
@@ -273,7 +273,7 @@ export default function HomeSection() {
                 </motion.p>
                 <motion.h1
                   id="home-heading"
-                  className="text-7xl font-bold bg-gradient-to-r from-blue-800 to-green-600 bg-clip-text text-transparent my-3"
+                  className="text-7xl font-bold bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-800 dark:to-green-600 bg-clip-text text-transparent my-3"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
@@ -282,7 +282,7 @@ export default function HomeSection() {
                   Bruno Caceres
                 </motion.h1>
                 <motion.p
-                  className="text-green-500 text-4xl flex items-center"
+                  className="text-blue-600 dark:text-green-500 text-4xl flex items-center"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
@@ -290,7 +290,7 @@ export default function HomeSection() {
                 >
                   &gt;&nbsp;
                   <span className="mr-1">{jobTitle}</span>
-                  <span className="animate-blink w-2 h-8 bg-green-500 inline-block"></span>
+                  <span className="animate-blink w-2 h-8 bg-blue-600 dark:bg-green-500 inline-block"></span>
                 </motion.p>
               </motion.div>
 
@@ -307,23 +307,24 @@ export default function HomeSection() {
                 initial="hidden"
                 animate={terminalReveal.isInView ? "visible" : "hidden"}
               >
-                <p className="text-gray-400">// find my profile on GitHub:</p>
+                <p className="text-gray-600 dark:text-gray-400">// find my profile on GitHub:</p>
                 <p className="mt-2">
-                  <span className="text-blue-500">const</span>
-                  <span className="text-green-500"> githubLink</span>
-                  <span className="text-white"> = </span>
+                  <span className="text-blue-600 dark:text-blue-500">const</span>
+                  <span className="text-green-600 dark:text-green-500"> githubLink</span>
+                  <span className="text-gray-800 dark:text-white"> = </span>
                   <a
                     href="https://github.com/BCaceress"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-orange-400 hover:underline"
+                    className="text-orange-500 dark:text-orange-400 hover:underline"
                   >
                     "https://github.com/BCaceress"
                   </a>
-                  <span className="text-white">;</span>
+                  <span className="text-gray-800 dark:text-white">;</span>
                 </p>
               </motion.div>
 
+              {/* Social links - Updated for theme support */}
               <motion.div
                 className="flex space-x-5 mt-8"
                 ref={socialReveal.ref}
@@ -342,7 +343,7 @@ export default function HomeSection() {
                   <motion.a
                     key={index}
                     href={link.href}
-                    className={`text-gray-400 hover:text-${link.hoverColor} transition-colors duration-300`}
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.ariaLabel}
@@ -667,9 +668,9 @@ export default function HomeSection() {
         </div>
       </motion.div>
 
-      {/* Scroll down indicator */}
+      {/* Scroll down indicator - Updated for theme support */}
       <motion.button
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition-colors z-10"
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-green-600 transition-colors z-10"
         initial={{ opacity: 0 }}
         animate={{
           opacity: isLoading ? 0 : 1,
@@ -688,7 +689,7 @@ export default function HomeSection() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        <ChevronDown size={30} className="text-green-500" />
+        <ChevronDown size={30} className="text-blue-600 dark:text-green-500" />
       </motion.button>
     </section>
   );

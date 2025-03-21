@@ -24,11 +24,13 @@ export const translations = {
       languageToggle: "PT",
     },
     skills: {
-      title: "> Skills",
+      title: "Skills",
       subtitle: "The skills, tools, and technologies I am really good at:",
+      allCategories: "All Categories",
+      noSkillsFound: "No skills found in this category."
     },
     contactForm: {
-      title: "> Contact-me",
+      title: " Contact-me",
       subtitle:
         "What's next? Feel free to reach out if you're looking for a developer, have a query, or simply want to connect.",
       toast: {
@@ -106,11 +108,13 @@ But life isn’t just about coding, right? In my free time, I enjoy traveling, p
       languageToggle: "EN",
     },
     skills: {
-      title: "> Habilidades",
+      title: "Habilidades",
       subtitle: "As habilidades, ferramentas e tecnologias em que sou realmente bom:",
+      allCategories: "Todas as Categorias",
+      noSkillsFound: "Nenhuma habilidade encontrada nesta categoria."
     },
     contactForm: {
-      title: "> Contato",
+      title: "Contato",
       subtitle:
         "O que vem a seguir? Fique à vontade para entrar em contato se estiver procurando um desenvolvedor, tiver alguma dúvida ou simplesmente quiser se conectar.",
       toast: {

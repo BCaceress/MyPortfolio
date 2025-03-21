@@ -92,14 +92,7 @@ export default function AboutMe() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <motion.span
-            className="inline-block text-sm uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400 mb-2"
-            initial={{ opacity: 0 }}
-            animate={isTitleInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            About
-          </motion.span>
+
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
             <span className="text-blue-600 dark:text-blue-400 inline-block mr-3">{">"}</span>
             {aboutMeText.title}
