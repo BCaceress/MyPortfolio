@@ -1,4 +1,3 @@
-// /components/Navbar.tsx
 "use client";
 
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -19,7 +18,17 @@ const Navbar = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
   const { language, toggleLanguage } = useLanguage();
+
+  // Detectar rolagem para alterar o estilo do navbar
+  useEffect(() => {
+    const handleScrollEffect = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScrollEffect);
+    return () => window.removeEventListener("scroll", handleScrollEffect);
+  }, []);
 
   useEffect(() => {
     if (darkMode) {
@@ -124,8 +133,15 @@ const Navbar = () => {
     : "opacity-100 transform scale-100 rotate-0 translate-y-0";
 
   return (
-    <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 bg-white dark:bg-dark-bg shadow-md transition-colors duration-300 z-50" role="navigation" aria-label="Main navigation">
-      <div className="text-xl font-bold text-gray-900 dark:text-white">
+    <nav
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 py-3 transition-all duration-300 z-50 ${isScrolled
+        ? 'bg-white/80 dark:bg-dark-bg/90 backdrop-blur-md shadow-lg'
+        : 'bg-white/50 dark:bg-dark-bg/50 backdrop-blur-sm'
+        }`}
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div className="text-xl font-bold">
         <a
           href="#home"
           className="focus:outline-none rounded transition-transform duration-300 hover:scale-110 inline-block"
@@ -134,14 +150,14 @@ const Navbar = () => {
             handleScroll("home");
           }}
         >
-          <span className="text-black dark:text-white transition-colors duration-300">&lt;BC /&gt;</span>
+          <span className="text-black dark:text-white bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-extrabold text-2xl">&lt;BC /&gt;</span>
         </a>
       </div>
 
       {/* Menu button for smaller screens */}
       <button
         onClick={toggleMenu}
-        className="md:hidden text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-110 focus:outline-none"
+        className="md:hidden text-gray-700 dark:text-gray-300 p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-all duration-300 hover:scale-110 focus:outline-none"
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
         aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -162,46 +178,50 @@ const Navbar = () => {
 
       <div
         id="mobile-menu"
-        className={`absolute md:static top-16 left-0 w-full md:w-auto bg-white dark:bg-dark-bg md:flex md:items-center md:space-x-6 p-4 md:p-0 shadow-md md:shadow-none transition-all duration-300 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-[-10px] opacity-0 pointer-events-none md:translate-y-0 md:opacity-100 md:pointer-events-auto"
+        className={`absolute md:static top-16 left-0 w-full md:w-auto bg-white/90 dark:bg-dark-bg/90 backdrop-blur-lg md:backdrop-blur-none md:bg-transparent md:dark:bg-transparent md:flex md:items-center md:space-x-6 p-4 md:p-0 shadow-lg md:shadow-none transition-all duration-300 ${menuOpen
+          ? "translate-y-0 opacity-100"
+          : "translate-y-[-10px] opacity-0 pointer-events-none md:translate-y-0 md:opacity-100 md:pointer-events-auto"
           }`}
       >
         {/* Navigation Links */}
-        <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-gray-700 dark:text-gray-300">
+        <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 text-gray-700 dark:text-gray-300">
           {navLinks.map(link => (
             <li key={link.id}>
               <button
                 onClick={() => handleScroll(link.id)}
-                className={`transition-all duration-300 focus:outline-none rounded px-3 py-1 relative group ${activeLink === link.id
-                    ? 'text-blue-600 dark:text-blue-400 font-medium'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
+                className={`transition-all duration-300 focus:outline-none px-3 py-2 relative group ${activeLink === link.id
+                  ? 'text-blue-600 dark:text-blue-400 font-medium'
+                  : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 aria-label={`Navigate to ${link.id} section`}
                 aria-current={activeLink === link.id ? "page" : undefined}
               >
                 {link.label}
-                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transform transition-transform duration-300 ${activeLink === link.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`}></span>
+                <span
+                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transform transition-transform duration-300 ${activeLink === link.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`}>
+                </span>
               </button>
             </li>
           ))}
         </ul>
 
-        <div className="border-t border-gray-300 dark:border-gray-600 my-4 md:hidden"></div>
+        <div className="border-t border-gray-300 dark:border-gray-700 my-4 md:hidden"></div>
 
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-5">
           {/* Language toggle button */}
           <button
             onClick={toggleLanguage}
-            className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-transform duration-300 hover:scale-110 focus:outline-none"
+            className="text-gray-700 dark:text-gray-300 p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-all duration-300 hover:scale-110 focus:outline-none"
             aria-label={`Switch to ${language === 'en' ? 'Portuguese' : 'English'}`}
           >
-            {translations[language].navbar.languageToggle}
+            <span className="font-medium">{translations[language].navbar.languageToggle}</span>
           </button>
 
           {/* Dark/light mode toggle button with animation */}
           <button
             onClick={toggleDarkMode}
-            className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-transform duration-300 hover:scale-110 focus:outline-none relative h-10 w-10 flex items-center justify-center overflow-hidden"
+            className="text-gray-700 dark:text-gray-300 p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-transform duration-300 hover:scale-110 focus:outline-none relative h-10 w-10 flex items-center justify-center overflow-hidden"
             aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             disabled={isAnimating}
           >
@@ -228,17 +248,21 @@ const Navbar = () => {
             href="/PDF/BrunoCaceresCurrículo.pdf"
             download
             onClick={handleDownload}
-            className="group bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 dark:hover:bg-gray-700 transition-all duration-300 hover:shadow-lg mt-2 md:mt-0 text-center focus:outline-none relative overflow-hidden"
+            className="group bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-purple-800 text-white px-5 py-2 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/20 mt-2 md:mt-0 text-center focus:outline-none relative overflow-hidden transform hover:-translate-y-1"
             aria-label="Download CV"
           >
             <span className={`inline-flex items-center transition-transform duration-300 ${isDownloading ? 'transform -translate-y-10' : ''}`}>
+              <Download size={16} className="mr-2" />
               {translations[language].navbar.downloadCV}
             </span>
             <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${isDownloading ? 'transform translate-y-0 opacity-100' : 'transform translate-y-10 opacity-0'}`}>
-              <Download size={18} className="mr-1 animate-bounce" />
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
               <span>Downloading...</span>
             </span>
-            <span className="absolute bottom-0 left-0 h-1 bg-blue-500 transition-all duration-1000 ease-out group-hover:w-full" style={{ width: isDownloading ? '100%' : '0%' }}></span>
+            <span className="absolute bottom-0 left-0 h-1 bg-white/30 transition-all duration-1000 ease-out" style={{ width: isDownloading ? '100%' : '0%' }}></span>
           </a>
         </div>
       </div>
