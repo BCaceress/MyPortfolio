@@ -1,49 +1,55 @@
-import type { Metadata } from "next";
-import "../styles/globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Hello from "@/app/page";
 import AboutMe from "@/app/about-me/page";
 import ContactMe from "@/app/contact-me/page";
-import Skills from "@/app/skills/page";
+import Hello from "@/app/page";
 import Projects from "@/app/projects/page";
+import Skills from "@/app/skills/page";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import PageTransition from "@/components/PageTransition";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "../styles/globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bruno Caceres Portfólio",
-  description: "Portfólio de Bruno Caceres - Desenvolvedor Web e Mobile",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-  },
+  title: "Bruno Caceres - Portfolio",
+  description: "Portfolio de Bruno Caceres, desenvolvedor full-stack",
 };
 
-export default function Portfolio() {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <LanguageProvider>
-      <html lang="pt-BR" className="dark">
-        <body className="min-h-screen flex flex-col bg-dark-bg text-white transition-colors duration-300">
-          <Navbar />
-          <main className="flex-grow">
-            <section id="home">
-              <Hello />
-            </section>
-            <section id="about">
-              <AboutMe />
-            </section>
-            <section id="skills">
-              <Skills />
-            </section>
-            <section id="projects">
-              <Projects />
-            </section>
-            <section id="contact">
-              <ContactMe />
-            </section>
-          </main>
-          <Footer />
-        </body>
-      </html>
-    </LanguageProvider>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.className} bg-white dark:bg-dark-bg transition-colors duration-300`}>
+        <LanguageProvider>
+          <PageTransition>
+            <Navbar />
+            <main className="flex-grow">
+              <section id="home">
+                <Hello />
+              </section>
+              <section id="about">
+                <AboutMe />
+              </section>
+              <section id="skills">
+                <Skills />
+              </section>
+              <section id="projects">
+                <Projects />
+              </section>
+              <section id="contact">
+                <ContactMe />
+              </section>
+            </main>
+            <Footer />
+          </PageTransition>
+        </LanguageProvider>
+      </body>
+    </html>
   );
 }
