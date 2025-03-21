@@ -76,7 +76,7 @@ export const translations = {
  
 I’m passionate about technology and love building innovative solutions that make a difference. Recently, I started learning English, which has been an exciting experience! I see it as an essential step to expanding my career even further.
  
-But life isn’t just about coding, right? In my free time, I enjoy traveling, playing sports, gaming, and, of course, spending quality time with my family and my dog. 🚀`
+But life isn’t just about coding, right? In my free time, I enjoy traveling, playing sports, gaming, and, of course, spending quality time with my family and my dog.`
 
     },
   },
@@ -160,7 +160,7 @@ But life isn’t just about coding, right? In my free time, I enjoy traveling, p
 
 Sou apaixonado por tecnologia e adoro criar soluções inovadoras que fazem a diferença. Recentemente, comecei a aprender inglês, o que tem sido uma experiência incrível! Vejo isso como um passo essencial para crescer ainda mais na área.
 
-Mas nem tudo na vida é código, né? No meu tempo livre, gosto de viajar, praticar esportes, jogar e, claro, curtir bons momentos com minha família e meu cachorro. 🚀`}
+Mas nem tudo na vida é código, né? No meu tempo livre, gosto de viajar, praticar esportes, jogar e, claro, curtir bons momentos com minha família e meu cachorro.`}
 
   },
 };

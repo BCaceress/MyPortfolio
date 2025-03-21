@@ -95,6 +95,9 @@ const FilterButtons = ({
   setActiveFilter: (filter: string) => void,
   language: string
 }) => {
+  // Use language prop to determine the "All" button text
+  const allButtonText = language === 'en' ? 'All' : 'Todas';
+
   return (
     <motion.div
       className="flex flex-wrap justify-center gap-3 mb-12"
@@ -109,7 +112,7 @@ const FilterButtons = ({
             ? 'bg-blue-600 text-white shadow-md scale-105'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'}`}
       >
-        Todas
+        {allButtonText}
       </button>
 
       {categories.map((category) => (
