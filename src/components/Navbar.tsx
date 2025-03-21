@@ -150,7 +150,7 @@ const Navbar = () => {
             handleScroll("home");
           }}
         >
-          <span className="text-black dark:text-white bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent font-extrabold text-2xl">&lt;BC /&gt;</span>
+          <span className="text-black dark:text-white bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-500 dark:to-green-400 bg-clip-text text-transparent font-extrabold text-2xl">&lt;BC /&gt;</span>
         </a>
       </div>
 
@@ -248,7 +248,7 @@ const Navbar = () => {
             href="/PDF/BrunoCaceresCurrículo.pdf"
             download
             onClick={handleDownload}
-            className="group bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-purple-800 text-white px-5 py-2 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/20 mt-2 md:mt-0 text-center focus:outline-none relative overflow-hidden transform hover:-translate-y-1"
+            className="group bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-500 dark:to-green-400 text-white px-5 py-2 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-green-400/20 mt-2 md:mt-0 text-center focus:outline-none relative overflow-hidden transform hover:-translate-y-1"
             aria-label="Download CV"
           >
             <span className={`inline-flex items-center transition-transform duration-300 ${isDownloading ? 'transform -translate-y-10' : ''}`}>

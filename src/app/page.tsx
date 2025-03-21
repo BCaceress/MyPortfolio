@@ -667,7 +667,7 @@ export default function HomeSection() {
 
         {/* Scroll down indicator - Enhanced with focus state for accessibility */}
         <motion.button
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-green-600 transition-colors z-10 shadow-md hover:shadow-lg"
+          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 p-3 rounded-full bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-green-600 transition-colors z-10 shadow-md hover:shadow-lg"
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
