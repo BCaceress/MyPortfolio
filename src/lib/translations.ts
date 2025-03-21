@@ -54,26 +54,28 @@ export const translations = {
       },
     },
     footer: {
-      findMe: "find me in:",
+      findMe: "Connect With Me",
       year: "2025",
-      designedAndCoded: "Designed and coded with",
+      allRights: "All rights reserved.",
+      designedAndCoded: "Designed & Coded with",
       by: "by",
+      tagline: "Transforming ideas into exceptional digital experiences through creative and clean code."
     },
-      aboutMe: {
-        title: "About-me",
-        subtitle: "Full Stack Developer | Passionate about learning and creating solutions:",
-        codeSnippet: `const aboutMe = {<br />
+    aboutMe: {
+      title: "About-me",
+      subtitle: "Full Stack Developer | Passionate about learning and creating solutions:",
+      codeSnippet: `const aboutMe = {<br />
   &nbsp;&nbsp;name: "Bruno Caceres",<br />
   &nbsp;&nbsp;profession: "Full Stack Developer",<br />
   &nbsp;&nbsp;skills: ["React", "Next.js", "Tailwind", "TypeScript"],<br />
   &nbsp;&nbsp;experience: "7+ years",<br />
   };`,
-        commentBlock: ` Hey there! I'm a full-stack developer with over 7 years of experience, and for the past 2 years, I’ve been diving into the mobile world with React Native. My journey in tech started back in 2010 when I took a technical IT course and got my first opportunity in the industry. Since then, I haven’t stopped! I earned my degree in Internet Systems from Feevale University, and now I'm in the 4th module of my Full Stack post-graduate program, always looking to grow and take on new challenges.
+      commentBlock: ` Hey there! I'm a full-stack developer with over 7 years of experience, and for the past 2 years, I’ve been diving into the mobile world with React Native. My journey in tech started back in 2010 when I took a technical IT course and got my first opportunity in the industry. Since then, I haven’t stopped! I earned my degree in Internet Systems from Feevale University, and now I'm in the 4th module of my Full Stack post-graduate program, always looking to grow and take on new challenges.
  
 I’m passionate about technology and love building innovative solutions that make a difference. Recently, I started learning English, which has been an exciting experience! I see it as an essential step to expanding my career even further.
  
 But life isn’t just about coding, right? In my free time, I enjoy traveling, playing sports, gaming, and, of course, spending quality time with my family and my dog. 🚀`
-      
+
     },
   },
 
@@ -134,25 +136,27 @@ But life isn’t just about coding, right? In my free time, I enjoy traveling, p
       },
     },
     footer: {
-      findMe: "Me encontre em:",
+      findMe: "Conecte-se Comigo",
       year: "2025",
-      designedAndCoded: "Desenhado e codificado com",
+      allRights: "Todos os direitos reservados.",
+      designedAndCoded: "Projetado e Codificado com",
       by: "por",
+      tagline: "Transformando ideias em experiências digitais excepcionais através de código criativo e limpo."
     },
-      aboutMe: {
-        title: "Sobre-mim",
-        subtitle: "Desenvolvedor Full Stack | Apaixonado por aprender e criar soluções:",
-        codeSnippet: `const aboutMe = {<br />
+    aboutMe: {
+      title: "Sobre-mim",
+      subtitle: "Desenvolvedor Full Stack | Apaixonado por aprender e criar soluções:",
+      codeSnippet: `const aboutMe = {<br />
   &nbsp;&nbsp;nome: "Bruno Caceres",<br />
   &nbsp;&nbsp;profissão: "Desenvolvedor Full Stack",<br />
   &nbsp;&nbsp;habilidades: ["React", "Next.js", "Tailwind", "TypeScript"],<br />
   &nbsp;&nbsp;experiência: "7+ anos",<br />
   };`,
-        commentBlock: ` Olá! Sou um desenvolvedor full-stack com mais de 7 anos de experiência, e nos últimos 2 anos venho me aventurando no mundo mobile com React Native. Minha jornada na tecnologia começou lá em 2010, quando fiz um curso técnico em TI e tive minha primeira oportunidade no mercado de trabalho. Desde então, não parei mais! Me formei em Sistemas para Internet pela Faculdade Feevale e, atualmente, estou no 4º módulo da minha pós-graduação em Full Stack, sempre buscando evoluir e me desafiar.
+      commentBlock: ` Olá! Sou um desenvolvedor full-stack com mais de 7 anos de experiência, e nos últimos 2 anos venho me aventurando no mundo mobile com React Native. Minha jornada na tecnologia começou lá em 2010, quando fiz um curso técnico em TI e tive minha primeira oportunidade no mercado de trabalho. Desde então, não parei mais! Me formei em Sistemas para Internet pela Faculdade Feevale e, atualmente, estou no 4º módulo da minha pós-graduação em Full Stack, sempre buscando evoluir e me desafiar.
 
 Sou apaixonado por tecnologia e adoro criar soluções inovadoras que fazem a diferença. Recentemente, comecei a aprender inglês, o que tem sido uma experiência incrível! Vejo isso como um passo essencial para crescer ainda mais na área.
 
 Mas nem tudo na vida é código, né? No meu tempo livre, gosto de viajar, praticar esportes, jogar e, claro, curtir bons momentos com minha família e meu cachorro. 🚀`}
-    
+
   },
 };

@@ -127,6 +127,8 @@ export default function AboutMe() {
               ref={profileRef}
               className="flex justify-center"
               variants={itemVariants}
+              initial="hidden"
+              animate={isProfileInView ? "visible" : "hidden"}
             >
               <div className="relative">
                 {/* Outer ring with gradient */}

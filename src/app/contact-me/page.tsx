@@ -7,10 +7,47 @@ import { Check, Loader2, Mail, RotateCcw, Send } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
+// Define the interface for the contact form translations
+interface ContactFormTranslations {
+  title: string;
+  subtitle: string;
+  toast: {
+    fillAllFields: string;
+    nameMessageRequired: string;
+    redirectingEmail: string;
+    openingWhatsApp: string;
+  };
+  thankYou: {
+    title: string;
+    message: string;
+    newMessage: string;
+  };
+  labels: {
+    name: string;
+    email: string;
+    message: string;
+  };
+  placeholders: {
+    name: string;
+    email: string;
+    message: string;
+  };
+  validation?: {
+    nameRequired: string;
+    emailRequired: string;
+    messageRequired: string;
+  };
+  buttons?: {
+    sendEmail: string;
+    sendWhatsApp: string;
+    sending: string;
+  };
+}
+
 export default function ContactForm() {
   const { language } = useLanguage();
   // Recupera as traduções do idioma atual ou utiliza o inglês como fallback
-  const rawContactText = (translations[language] || translations["en"]).contactForm;
+  const rawContactText = (translations[language] || translations["en"]).contactForm as ContactFormTranslations;
 
   const contactText = {
     ...rawContactText,
@@ -60,11 +97,6 @@ export default function ContactForm() {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -83,22 +115,29 @@ export default function ContactForm() {
     [formErrors]
   );
 
-  const validateForm = (method: "email" | "whatsapp") => {
-    const errors = {
-      name: !formData.name.trim(),
-      message: !formData.message.trim(),
-      email:
-        method === "email"
-          ? !formData.email.trim() || !isValidEmail(formData.email)
-          : false,
-    };
-
-    setFormErrors(errors);
-    return !Object.values(errors).some(Boolean);
-  };
-
   const handleSend = useCallback(
     (method: "email" | "whatsapp") => {
+      // Moved isValidEmail inside useCallback to fix the dependency warning
+      const isValidEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };
+
+      // Moved validateForm inside useCallback to fix the dependency warning
+      const validateForm = (method: "email" | "whatsapp") => {
+        const errors = {
+          name: !formData.name.trim(),
+          message: !formData.message.trim(),
+          email:
+            method === "email"
+              ? !formData.email.trim() || !isValidEmail(formData.email)
+              : false,
+        };
+
+        setFormErrors(errors);
+        return !Object.values(errors).some(Boolean);
+      };
+
       if (!validateForm(method)) {
         toast.error(
           method === "email"

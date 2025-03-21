@@ -174,7 +174,7 @@ function Footer() {
               &lt;BC /&gt;
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 max-w-xs">
-              {footerText.tagline || "Transforming ideas into exceptional digital experiences through creative and clean code."}
+              {footerText.tagline}
             </p>
           </motion.div>
 

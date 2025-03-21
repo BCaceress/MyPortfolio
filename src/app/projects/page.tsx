@@ -225,8 +225,8 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose, isOpen }) => {
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
                       className={`w-2 h-2 rounded-full transition-all ${idx === currentImageIndex
-                          ? "bg-white w-4"
-                          : "bg-white bg-opacity-50 hover:bg-opacity-70"
+                        ? "bg-white w-4"
+                        : "bg-white bg-opacity-50 hover:bg-opacity-70"
                         }`}
                       aria-label={`Ver imagem ${idx + 1}`}
                     />
@@ -456,7 +456,7 @@ const Projects: FC = () => {
     const isBeginning = currentSlide === 0;
     const isEnd = currentSlide === totalDots - 1;
     return { totalDots, isBeginning, isEnd };
-  }, [currentSlide, projects.length]);
+  }, [currentSlide, slidesPerView.desktop]); 
 
   // Callbacks para navegação
   const handlePrev = useCallback(() => instanceRef.current?.prev(), [instanceRef]);
@@ -576,8 +576,8 @@ const Projects: FC = () => {
                 key={index}
                 onClick={() => handleGoToSlide(index)}
                 className={`h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${currentSlide === index
-                    ? "bg-blue-600 w-6"
-                    : "bg-gray-400 hover:bg-gray-500"
+                  ? "bg-blue-600 w-6"
+                  : "bg-gray-400 hover:bg-gray-500"
                   }`}
                 aria-label={`Ir para slide ${index + 1}`}
                 aria-selected={currentSlide === index}

@@ -1,8 +1,12 @@
 "use client";
 
-import { useLanguage } from "@/contexts/LanguageContext";
-import { translations } from "@/lib/translations";
-import { AnimatePresence, motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useScroll,
+  useTransform
+} from "framer-motion";
 import {
   ChevronDown,
   Facebook,
@@ -12,18 +16,36 @@ import {
   LucideIcon,
   MessageCircle
 } from "lucide-react";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+// Import the correct type from framer-motion
+import type { UseInViewOptions } from "framer-motion";
+
+// Define a custom extended interface that includes threshold
+interface ScrollRevealOptions extends Omit<UseInViewOptions, 'amount'> {
+  amount?: number;
+  threshold?: number; // Add threshold property
+}
 
 // Custom hook for scroll reveal animations
-const useScrollReveal = (options = { threshold: 0.1 }) => {
+const useScrollReveal = (options: ScrollRevealOptions = { threshold: 0.1 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, options);
+  // Convert threshold to amount if threshold is provided
+  const inViewOptions = options.threshold !== undefined
+    ? { ...options, amount: options.threshold }
+    : options;
 
+  const isInView = useInView(ref, inViewOptions as UseInViewOptions);
   return { ref, isInView };
 };
 
 // Custom hook for typewriter effect
-const useTypewriter = (words: string[], typingSpeed: number = 150, deletingSpeed: number = 100, delayBetween: number = 2000) => {
+const useTypewriter = (
+  words: string[],
+  typingSpeed: number = 150,
+  deletingSpeed: number = 100,
+  delayBetween: number = 2000
+) => {
   const [text, setText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -41,11 +63,9 @@ const useTypewriter = (words: string[], typingSpeed: number = 150, deletingSpeed
 
       // Handle the typing/deleting cycle
       if (!shouldDelete && text === currentWord) {
-        // Start deleting after delay
         setTimeout(() => setIsDeleting(true), delayBetween);
       } else if (shouldDelete && text === '') {
         setIsDeleting(false);
-        // Move to next word
         setWordIndex((prev) => (prev + 1) % words.length);
       }
     };
@@ -61,76 +81,7 @@ const useTypewriter = (words: string[], typingSpeed: number = 150, deletingSpeed
   return text;
 };
 
-// Interfaces para tipagem
-interface SocialIconProps {
-  href: string;
-  icon: LucideIcon;
-  hoverColor: string;
-  ariaLabel: string;
-}
-
-interface CodeContent {
-  comment1: string;
-  comment2: string;
-  githubLinkText: string;
-  githubLinkUrl: string;
-}
-
-interface CodeTerminalProps {
-  codeContent: CodeContent;
-}
-
-// Componente de ícone social memoizado para evitar re-renderizações
-const SocialIcon = memo(({ href, icon: Icon, hoverColor, ariaLabel }: SocialIconProps) => {
-  return (
-    <a
-      href={href}
-      className={`text-gray-600 dark:text-gray-300 hover:text-${hoverColor} dark:hover:text-${hoverColor} transition-colors duration-200`}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={ariaLabel}
-    >
-      <Icon size={30} />
-    </a>
-  );
-});
-
-SocialIcon.displayName = "SocialIcon";
-
-// Componente do terminal de código memoizado
-const CodeTerminal = memo(({ codeContent }: CodeTerminalProps) => {
-  return (
-    <div className="mt-8 w-full max-w-2xl mx-auto bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-      {/* Conteúdo da IDE */}
-      <div className="px-6 py-5 text-lg font-mono">
-        <p className="text-gray-400">Hello World. I am</p>
-        <h1 className="text-4xl text-white font-bold mb-2">Bruno Caceres</h1>
-        <p className="text-blue-400 text-xl mb-8">&gt; Front-end developer</p>
-
-        <p className="text-gray-400">{codeContent.comment1}</p>
-        <p className="text-gray-400 mb-2">{codeContent.comment2}</p>
-        <p>
-          <span className="text-blue-500">const</span>
-          <span className="text-green-500"> githubLink</span>
-          <span className="text-white"> = </span>{" "}
-          <a
-            href="https://github.com/BCaceress"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-orange-400 hover:underline"
-          >
-            "https://github.com/BCaceress"
-          </a>
-          <span className="text-white">;</span>
-        </p>
-      </div>
-    </div>
-  );
-});
-
-CodeTerminal.displayName = "CodeTerminal";
-
-// Interface para o tipo de dados usado no array socialLinks
+// Interface for the type of data used in the socialLinks array
 interface SocialLink {
   href: string;
   icon: LucideIcon;
@@ -139,8 +90,6 @@ interface SocialLink {
 }
 
 export default function HomeSection() {
-  const { language } = useLanguage();
-  const homeText = translations[language].home;
   const [isLoading, setIsLoading] = useState(true);
   const jobTitle = useTypewriter(['Front-end developer', 'Mobile developer'], 150, 100, 2000);
 
@@ -162,7 +111,7 @@ export default function HomeSection() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Função para rolar para a próxima seção
+  // Scroll to next section function
   const scrollToNextSection = useCallback(() => {
     const nextSection = document.querySelector('section:nth-of-type(2)');
     if (nextSection) {
@@ -170,7 +119,7 @@ export default function HomeSection() {
     }
   }, []);
 
-  // Array de redes sociais para renderização mais limpa
+  // Array of social links
   const socialLinks: SocialLink[] = [
     {
       href: "https://github.com/BCaceress",
@@ -204,36 +153,7 @@ export default function HomeSection() {
     }
   ];
 
-  // Social icons component
-  const SocialIcons = () => (
-    <motion.div
-      className="flex space-x-4 mt-6"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8, duration: 0.5 }}
-    >
-      {socialLinks.map((link, index) => (
-        <a
-          key={index}
-          href={link.href}
-          className={`text-gray-400 hover:text-${link.hoverColor} transition-colors duration-300`}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={link.ariaLabel}
-        >
-          <link.icon size={24} />
-        </a>
-      ))}
-    </motion.div>
-  );
-
-  const codeContent = {
-    comment1: "// complete the game to continue",
-    comment2: "// find my profile on GitHub:",
-    githubLinkText: "const githubLink",
-    githubLinkUrl: "\"https://github.com/BCaceress\""
-  };
-
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -250,18 +170,6 @@ export default function HomeSection() {
     visible: {
       y: 0,
       opacity: 1
-    }
-  };
-
-  const scrollRevealVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut"
-      }
     }
   };
 
@@ -284,17 +192,26 @@ export default function HomeSection() {
           ></motion.div>
           <motion.div
             className="absolute -right-[300px] top-[100px] bg-gradient-to-l from-green-800/20 to-emerald-500/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
-            style={{ animationDuration: '8s', animationDelay: '1s', y: useTransform(scrollY, [0, 500], [0, -150]) }}
+            style={{
+              animationDuration: '8s',
+              animationDelay: '1s',
+              y: useTransform(scrollY, [0, 500], [0, -150])
+            }}
           ></motion.div>
           <motion.div
             className="absolute -left-[300px] bottom-[100px] bg-gradient-to-r from-blue-800/20 to-teal-600/20 rounded-full w-[500px] h-[500px] blur-3xl opacity-30 animate-pulse"
-            style={{ animationDuration: '10s', animationDelay: '2s', y: useTransform(scrollY, [0, 500], [0, -70]) }}
+            style={{
+              animationDuration: '10s',
+              animationDelay: '2s',
+              y: useTransform(scrollY, [0, 500], [0, -70])
+            }}
           ></motion.div>
         </div>
       </div>
 
+      {/* Loading animation */}
       <AnimatePresence>
-        {isLoading ? (
+        {isLoading && (
           <motion.div
             className="flex items-center justify-center w-full h-screen absolute inset-0 z-50 bg-gray-900"
             initial={{ opacity: 1 }}
@@ -306,10 +223,10 @@ export default function HomeSection() {
               <p className="text-green-500 font-mono">Loading portfolio...</p>
             </div>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
 
-      {/* Content wrapper with z-index to appear above background */}
+      {/* Content wrapper */}
       <motion.div
         className="max-w-5xl mx-auto w-full z-10 relative"
         initial="hidden"
@@ -318,21 +235,18 @@ export default function HomeSection() {
       >
         {/* Main content container */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          {/* Left side: Terminal code area - Moved more to the left */}
+          {/* Left side: Terminal code area */}
           <motion.div
             className="w-full md:w-3/5 md:-ml-16 pl-0"
             variants={itemVariants}
             ref={terminalReveal.ref}
             initial="hidden"
             animate={terminalReveal.isInView ? "visible" : "hidden"}
-            variants={scrollRevealVariants}
           >
             <div className="backdrop-blur-sm rounded-xl">
               <motion.div
                 className="mb-8"
                 ref={headerReveal.ref}
-                initial="hidden"
-                animate={headerReveal.isInView ? "visible" : "hidden"}
                 variants={{
                   hidden: { opacity: 0, y: 30 },
                   visible: {
@@ -345,6 +259,8 @@ export default function HomeSection() {
                     }
                   }
                 }}
+                initial="hidden"
+                animate={headerReveal.isInView ? "visible" : "hidden"}
               >
                 <motion.p
                   className="text-gray-400 text-2xl"
@@ -372,7 +288,9 @@ export default function HomeSection() {
                     visible: { opacity: 1, y: 0 }
                   }}
                 >
-                  &gt;&nbsp;  <span className="mr-1">{jobTitle}</span><span className="animate-blink w-2 h-8 bg-green-500 inline-block"></span>
+                  &gt;&nbsp;
+                  <span className="mr-1">{jobTitle}</span>
+                  <span className="animate-blink w-2 h-8 bg-green-500 inline-block"></span>
                 </motion.p>
               </motion.div>
 
@@ -438,12 +356,10 @@ export default function HomeSection() {
             </div>
           </motion.div>
 
-          {/* Right side: Direct SVG Animation - With increased size */}
+          {/* Right side: SVG Animation */}
           <motion.div
             className="w-full md:w-2/5 flex justify-center items-center"
             ref={svgReveal.ref}
-            initial="hidden"
-            animate={svgReveal.isInView ? "visible" : "hidden"}
             variants={{
               hidden: { opacity: 0, x: 50 },
               visible: {
@@ -455,20 +371,20 @@ export default function HomeSection() {
                 }
               }
             }}
+            initial="hidden"
+            animate={svgReveal.isInView ? "visible" : "hidden"}
           >
             <motion.div
               className="h-full w-full flex flex-col items-center justify-center"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              {/* Programming SVG Animation - Larger size */}
+              {/* Programming SVG Animation */}
               <svg
                 viewBox="0 0 500 400"
                 className="w-[150%] h-[150%] max-w-[700px]"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Developer with Laptop and Projects */}
-
                 {/* Abstract circuit board background */}
                 <motion.path
                   d="M20,200 Q50,100 100,150 T150,100 T250,150 T350,100 T450,200"
@@ -515,8 +431,6 @@ export default function HomeSection() {
                   }}
                 />
 
-                {/* Portfolio elements */}
-
                 {/* Laptop Base */}
                 <motion.g
                   initial={{ opacity: 0, y: 20 }}
@@ -553,8 +467,6 @@ export default function HomeSection() {
                     <rect x="195" y="255" width="45" height="3" rx="1" fill="#ec4899" opacity="0.8" />
                   </motion.g>
                 </motion.g>
-
-                {/* Floating Portfolio Elements */}
 
                 {/* Mobile App */}
                 <motion.g
@@ -740,9 +652,7 @@ export default function HomeSection() {
                   transition={{ duration: 3, delay: 4 }}
                 />
 
-                {/* Remove the Call to action button */}
-
-                {/* Developer icon - Repositioned */}
+                {/* Developer icon */}
                 <motion.g
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

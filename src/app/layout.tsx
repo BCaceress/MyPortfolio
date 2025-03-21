@@ -18,11 +18,7 @@ export const metadata: Metadata = {
   description: "Portfolio de Bruno Caceres, desenvolvedor full-stack",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout() {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-white dark:bg-dark-bg transition-colors duration-300`}>
