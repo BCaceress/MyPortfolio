@@ -2,8 +2,9 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
-import { Loader2, Mail, MessageSquare, RotateCcw, Send } from "lucide-react";
-import { useCallback, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { Check, Loader2, Mail, RotateCcw, Send } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
 export default function ContactForm() {
@@ -38,6 +39,27 @@ export default function ContactForm() {
     message: false,
   });
 
+  // References for scroll animations
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const codeRef = useRef<HTMLDivElement>(null);
+
+  // Check if elements are in view
+  const isTitleInView = useInView(titleRef, { once: true, amount: 0.5 });
+  const isFormInView = useInView(formRef, { once: true, amount: 0.2 });
+  const isCodeInView = useInView(codeRef, { once: true, amount: 0.2 });
+
+  // Parallax scroll effect
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -50,7 +72,7 @@ export default function ContactForm() {
         ...prev,
         [name]: value,
       }));
-r
+
       if (formErrors[name as keyof typeof formErrors]) {
         setFormErrors((prev) => ({
           ...prev,
@@ -81,7 +103,16 @@ r
         toast.error(
           method === "email"
             ? contactText.toast.fillAllFields
-            : contactText.toast.nameMessageRequired
+            : contactText.toast.nameMessageRequired,
+          {
+            duration: 3000,
+            style: {
+              background: '#F43F5E',
+              color: '#fff',
+              fontWeight: 500,
+            },
+            icon: '⚠️',
+          }
         );
         return;
       }
@@ -95,14 +126,28 @@ r
             `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
           );
           window.location.href = `mailto:brunocaceres@live.com?subject=${subject}&body=${body}`;
-          toast.success(contactText.toast.redirectingEmail);
+          toast.success(contactText.toast.redirectingEmail, {
+            icon: '📧',
+            style: {
+              background: '#10B981',
+              color: '#fff',
+              fontWeight: 500,
+            },
+          });
         } else if (method === "whatsapp") {
           const phone = "5551981927091";
           const text = encodeURIComponent(
             `Hello, my name is ${formData.name}. ${formData.message}`
           );
           window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
-          toast.success(contactText.toast.openingWhatsApp);
+          toast.success(contactText.toast.openingWhatsApp, {
+            icon: '💬',
+            style: {
+              background: '#10B981',
+              color: '#fff',
+              fontWeight: 500,
+            },
+          });
         }
         setLoadingMethod(null);
         setSubmitted(true);
@@ -125,139 +170,288 @@ r
     });
   }, []);
 
+  const formLabelAnimation = {
+    initial: { y: -10, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: { duration: 0.4 }
+  };
+
+  const formInputAnimation = {
+    initial: { x: -10, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: 0.4, delay: 0.1 }
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div
+      ref={sectionRef}
+      id="contact"
+      className="min-h-screen relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 py-20"
+    >
       <Toaster position="top-center" />
-      <div className="container mx-auto py-12 px-4 sm:px-6">
-        <header className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 font-semibold mb-3">
+
+      {/* Background decoration elements */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{ opacity }}
+      >
+        <motion.div
+          className="absolute top-40 -right-20 w-96 h-96 bg-blue-300 rounded-full filter blur-3xl opacity-10 dark:opacity-5"
+          style={{ y: y1 }}
+        />
+        <motion.div
+          className="absolute bottom-40 -left-20 w-72 h-72 bg-emerald-300 rounded-full filter blur-3xl opacity-10 dark:opacity-5"
+          style={{ y: y2 }}
+        />
+
+        {/* Grid pattern in the background */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.03]"></div>
+
+        {/* Decorative code elements */}
+        <div className="absolute top-20 left-10 text-4xl text-gray-200 dark:text-gray-800 font-mono opacity-20 hidden lg:block">{'{'}</div>
+        <div className="absolute bottom-20 right-10 text-4xl text-gray-200 dark:text-gray-800 font-mono opacity-20 hidden lg:block">{'}'}</div>
+      </motion.div>
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        {/* Section Header with animation */}
+        <motion.header
+          ref={titleRef}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <motion.span
+            className="inline-block text-sm uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400 mb-2"
+            initial={{ opacity: 0 }}
+            animate={isTitleInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            Get in Touch
+          </motion.span>
+
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
+            <span className="text-blue-600 dark:text-blue-400 inline-block mr-3">{">"}</span>
             {contactText.title}
           </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+
+          <motion.p
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={isTitleInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
             {contactText.subtitle}
-          </p>
-        </header>
+          </motion.p>
+        </motion.header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <div className="rounded-lg shadow-lg bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300 transform hover:shadow-xl">
-            <div className="p-6">
+          {/* Contact Form Card */}
+          <motion.div
+            ref={formRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isFormInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="rounded-xl shadow-xl bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300 transform hover:shadow-2xl"
+          >
+            <div className="p-6 md:p-8">
               {submitted ? (
-                <div className="flex flex-col items-center justify-center text-center py-8">
-                  <div className="bg-green-100 dark:bg-green-900 rounded-full p-3 mb-6">
-                    <MessageSquare className="h-12 w-12 text-green-600 dark:text-green-300" />
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+                <motion.div
+                  className="flex flex-col items-center justify-center text-center py-8"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.div
+                    className="bg-green-100 dark:bg-green-900/50 rounded-full p-5 mb-6"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                  >
+                    <Check className="h-14 w-14 text-green-600 dark:text-green-400" strokeWidth={1.5} />
+                  </motion.div>
+
+                  <motion.h3
+                    className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
                     {contactText.thankYou.title}
-                  </h3>
-                  <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-md">
+                  </motion.h3>
+
+                  <motion.p
+                    className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
                     {contactText.thankYou.message}
-                  </p>
-                  <button
+                  </motion.p>
+
+                  <motion.button
                     onClick={handleReset}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transform hover:-translate-y-1"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
                     aria-label={contactText.thankYou.newMessage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
                   >
                     <RotateCcw size={18} />
                     {contactText.thankYou.newMessage}
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
               ) : (
-                <form
+                <motion.form
                   onSubmit={(e) => e.preventDefault()}
                   className="space-y-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
                   aria-label={contactText.title}
                 >
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    >
-                      {contactText.labels.name} <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder={contactText.placeholders.name}
-                      className={`w-full p-3 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 ${formErrors.name
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300"
-                        }`}
-                      aria-required="true"
-                      aria-invalid={formErrors.name}
-                    />
-                    {formErrors.name && (
-                      <p className="mt-1 text-sm text-red-500" role="alert">
-                        {contactText.validation.nameRequired}
-                      </p>
-                    )}
+                  {/* Form title */}
+                  <div className="mb-8">
+                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      {language === "en" ? "Send a Message" : "Enviar uma Mensagem"}
+                    </h3>
+                    <div className="h-1 w-16 bg-blue-600 dark:bg-blue-500 rounded"></div>
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    >
-                      {contactText.labels.email} <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder={contactText.placeholders.email}
-                      className={`w-full p-3 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 ${formErrors.email
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300"
-                        }`}
-                      aria-required="true"
-                      aria-invalid={formErrors.email}
-                    />
-                    {formErrors.email && (
-                      <p className="mt-1 text-sm text-red-500" role="alert">
-                        {contactText.validation.emailRequired}
-                      </p>
-                    )}
-                  </div>
+                  <motion.div
+                    variants={{
+                      initial: { opacity: 0 },
+                      animate: { opacity: 1, transition: { staggerChildren: 0.1 } }
+                    }}
+                    initial="initial"
+                    animate="animate"
+                  >
+                    {/* Name Field */}
+                    <motion.div variants={formLabelAnimation} className="mb-6">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      >
+                        {contactText.labels.name} <span className="text-red-500">*</span>
+                      </label>
+                      <motion.div variants={formInputAnimation} className="relative">
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder={contactText.placeholders.name}
+                          className={`w-full p-3 pl-10 pr-4 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${formErrors.name
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300"
+                            }`}
+                          aria-required="true"
+                          aria-invalid={formErrors.name}
+                        />
+                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                          <span className="text-lg font-semibold">@</span>
+                        </span>
+                        {formErrors.name && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-1 text-sm text-red-500"
+                            role="alert"
+                          >
+                            {contactText.validation.nameRequired}
+                          </motion.p>
+                        )}
+                      </motion.div>
+                    </motion.div>
 
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    >
-                      {contactText.labels.message} <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder={contactText.placeholders.message}
-                      rows={5}
-                      className={`w-full p-3 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 ${formErrors.message
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300"
-                        }`}
-                      aria-required="true"
-                      aria-invalid={formErrors.message}
-                    />
-                    {formErrors.message && (
-                      <p className="mt-1 text-sm text-red-500" role="alert">
-                        {contactText.validation.messageRequired}
-                      </p>
-                    )}
-                  </div>
+                    {/* Email Field */}
+                    <motion.div variants={formLabelAnimation} className="mb-6">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      >
+                        {contactText.labels.email} <span className="text-red-500">*</span>
+                      </label>
+                      <motion.div variants={formInputAnimation} className="relative">
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder={contactText.placeholders.email}
+                          className={`w-full p-3 pl-10 pr-4 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${formErrors.email
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300"
+                            }`}
+                          aria-required="true"
+                          aria-invalid={formErrors.email}
+                        />
+                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                          <Mail size={18} />
+                        </span>
+                        {formErrors.email && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-1 text-sm text-red-500"
+                            role="alert"
+                          >
+                            {contactText.validation.emailRequired}
+                          </motion.p>
+                        )}
+                      </motion.div>
+                    </motion.div>
+
+                    {/* Message Field */}
+                    <motion.div variants={formLabelAnimation} className="mb-6">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      >
+                        {contactText.labels.message} <span className="text-red-500">*</span>
+                      </label>
+                      <motion.div variants={formInputAnimation} className="relative">
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder={contactText.placeholders.message}
+                          rows={5}
+                          className={`w-full p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${formErrors.message
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300"
+                            }`}
+                          aria-required="true"
+                          aria-invalid={formErrors.message}
+                        />
+                        {formErrors.message && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-1 text-sm text-red-500"
+                            role="alert"
+                          >
+                            {contactText.validation.messageRequired}
+                          </motion.p>
+                        )}
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                    <button
+                    <motion.button
                       type="button"
                       onClick={() => handleSend("email")}
                       disabled={!!loadingMethod}
-                      className="flex items-center justify-center gap-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all duration-300 transform hover:translate-y-px focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                      className="flex items-center justify-center gap-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                       aria-label={contactText.buttons.sendEmail}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       {loadingMethod === "email" ? (
                         <>
@@ -270,13 +464,15 @@ r
                           <span>{contactText.buttons.sendEmail}</span>
                         </>
                       )}
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
                       type="button"
                       onClick={() => handleSend("whatsapp")}
                       disabled={!!loadingMethod}
-                      className="flex items-center justify-center gap-2 py-3 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md transition-all duration-300 transform hover:translate-y-px focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                      className="flex items-center justify-center gap-2 py-3 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                       aria-label={contactText.buttons.sendWhatsApp}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       {loadingMethod === "whatsapp" ? (
                         <>
@@ -289,18 +485,24 @@ r
                           <span>{contactText.buttons.sendWhatsApp}</span>
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </div>
-                </form>
+                </motion.form>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Visualização da Mensagem (IDE) */}
-          <div className="rounded-lg shadow-lg overflow-hidden transition-all duration-300 transform hover:shadow-xl h-full">
+          {/* Code Visualization */}
+          <motion.div
+            ref={codeRef}
+            initial={{ opacity: 0, x: 30 }}
+            animate={isCodeInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="rounded-xl shadow-xl overflow-hidden transition-all duration-300 transform hover:shadow-2xl h-full bg-gray-900"
+          >
             <div className="h-full flex flex-col">
-              {/* Header do IDE */}
-              <div className="flex items-center px-4 py-3 bg-gray-800 dark:bg-gray-900">
+              {/* IDE Header */}
+              <div className="flex items-center px-4 py-3 bg-gray-800 dark:bg-gray-900 border-b border-gray-700">
                 <div className="flex space-x-2">
                   <span className="w-3 h-3 bg-red-500 rounded-full"></span>
                   <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
@@ -308,10 +510,14 @@ r
                 </div>
                 <div className="ml-4 text-sm text-gray-400 flex items-center">
                   <span className="mr-2">📄</span>
-                  <span>message.js</span>
+                  <span className="font-mono">message.js</span>
                 </div>
                 <div className="ml-auto flex space-x-2">
-                  <button className="text-gray-400 hover:text-gray-200 transition-colors">
+                  <motion.button
+                    className="text-gray-400 hover:text-gray-200 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -328,179 +534,177 @@ r
                       <line x1="21" y1="3" x2="14" y2="10"></line>
                       <line x1="3" y1="21" x2="10" y2="14"></line>
                     </svg>
-                  </button>
-                  <button className="text-gray-400 hover:text-gray-200 transition-colors">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
 
-              {/* Corpo com o código */}
+              {/* Code Content Area with Line Animation */}
               <div className="flex-1 bg-gray-900 dark:bg-gray-800 overflow-auto">
-                <pre className="text-sm text-gray-100 p-5 font-mono leading-relaxed h-full">
-                  <code>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">1</span>
-                      <span className="text-purple-400">const</span>{" "}
-                      <span className="text-blue-400"> developerContact</span> = {"{"}
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">2</span>
-                      <span className="text-gray-100 ml-4">client: {"{"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">3</span>
-                      <span className="text-gray-100 ml-8">name: </span>
-                      <span className="text-green-400">
-                        &quot;{formData.name || contactText.placeholders.name}&quot;
-                      </span>
-                      <span className="text-gray-100">,</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">4</span>
-                      <span className="text-gray-100 ml-8">email: </span>
-                      <span className="text-green-400">
-                        &quot;{formData.email || contactText.placeholders.email}&quot;
-                      </span>
-                      <span className="text-gray-100">,</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">5</span>
-                      <span className="text-gray-100 ml-8">timestamp: </span>
-                      <span className="text-orange-400">{new Date().toISOString()}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">6</span>
-                      <span className="text-gray-100 ml-4">{"}"}, </span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">7</span>
-                      <span className="text-gray-100 ml-4">message: {"{"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">8</span>
-                      <span className="text-gray-100 ml-8">content: </span>
-                      <span className="text-green-400">
-                        &quot;{formData.message || contactText.placeholders.message}&quot;
-                      </span>
-                      <span className="text-gray-100">,</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">9</span>
-                      <span className="text-gray-100 ml-4">{"}"} </span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">10</span>
-                      <span className="text-gray-100">{"}"}</span>
-                      <span className="text-gray-100">;</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">11</span>
-                      <span className="text-gray-100"></span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">12</span>
-                      <span className="text-purple-400">async function</span>{" "}
-                      <span className="text-yellow-400"> sendMessage</span>
-                      <span className="text-gray-100">() {"{"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">13</span>
-                      <span className="text-gray-100 ml-4">try {"{"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">14</span>
-                      <span className="text-blue-300 ml-8">console</span>
-                      <span className="text-gray-100">.</span>
-                      <span className="text-blue-400">log</span>
-                      <span className="text-gray-100">(</span>
-                      <span className="text-yellow-400">&quot;Sending message...&quot;</span>
-                      <span className="text-gray-100">);</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">15</span>
-                      <span className="text-gray-100 ml-8">const</span>{" "}
-                      <span className="text-blue-400"> response</span>{" "}
-                      <span className="text-gray-100"> = </span>
-                      <span className="text-purple-400">await</span>{" "}
-                      <span className="text-blue-400"> fetch</span>
-                      <span className="text-gray-100">(</span>
-                      <span className="text-yellow-400">&quot;/api/contact&quot;</span>
-                      <span className="text-gray-100">, {"{"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">16</span>
-                      <span className="text-gray-100 ml-12">method: </span>
-                      <span className="text-yellow-400">&quot;POST&quot;</span>
-                      <span className="text-gray-100">,</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">17</span>
-                      <span className="text-gray-100 ml-12">body: </span>
-                      <span className="text-blue-300">JSON</span>
-                      <span className="text-gray-100">.</span>
-                      <span className="text-blue-400">stringify</span>
-                      <span className="text-gray-100">(developerContact)</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">18</span>
-                      <span className="text-gray-100 ml-8">{"});"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">19</span>
-                      <span className="text-gray-100 ml-8">return </span>
-                      <span className="text-purple-400">await</span>{" "}
-                      <span className="text-blue-400"> response</span>
-                      <span className="text-gray-100">.</span>
-                      <span className="text-blue-400">json</span>
-                      <span className="text-gray-100">();</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">20</span>
-                      <span className="text-gray-100 ml-4">{"}"} </span>
-                      <span className="text-purple-400">catch</span>
-                      <span className="text-gray-100"> (</span>
-                      <span className="text-blue-400">error</span>
-                      <span className="text-gray-100">) {"{"}</span>
-                    </div>
-                    <div className="flex ">
-                      <span className="text-gray-500 mr-4 select-none">21</span>
-                      <span className="text-blue-300 ml-8">console</span>
-                      <span className="text-gray-100">.</span>
-                      <span className="text-red-400">error</span>
-                      <span className="text-gray-100">(</span>
-                      <span className="text-yellow-400">&quot;Error:&quot;</span>
-                      <span className="text-gray-100">, error);</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">22</span>
-                      <span className="text-gray-100 ml-4">{"}"}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-gray-500 mr-4 select-none">23</span>
-                      <span className="text-gray-100">{"}"}</span>
-                    </div>
-                  </code>
-                </pre>
+                <CodeBlock
+                  formData={formData}
+                  placeholders={contactText.placeholders}
+                  isInView={isCodeInView}
+                />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
   );
 }
+
+// Component to animate code appearing line by line
+const CodeBlock = ({
+  formData,
+  placeholders,
+  isInView
+}: {
+  formData: { name: string; email: string; message: string };
+  placeholders: { name: string; email: string; message: string };
+  isInView: boolean;
+}) => {
+  const codeLines = [
+    { num: 1, content: <><span className="text-purple-400">const</span>{" "}<span className="text-blue-400">developerContact</span> = {"{"}</> },
+    { num: 2, content: <><span className="text-gray-100 ml-4">client: {"{"}</span></> },
+    {
+      num: 3, content: <>
+        <span className="text-gray-100 ml-8">name: </span>
+        <span className="text-green-400">
+          &quot;{formData.name || placeholders.name}&quot;
+        </span>
+        <span className="text-gray-100">,</span>
+      </>
+    },
+    {
+      num: 4, content: <>
+        <span className="text-gray-100 ml-8">email: </span>
+        <span className="text-green-400">
+          &quot;{formData.email || placeholders.email}&quot;
+        </span>
+        <span className="text-gray-100">,</span>
+      </>
+    },
+    {
+      num: 5, content: <>
+        <span className="text-gray-100 ml-8">timestamp: </span>
+        <span className="text-orange-400">{new Date().toISOString()}</span>
+      </>
+    },
+    { num: 6, content: <><span className="text-gray-100 ml-4">{"}"}, </span></> },
+    { num: 7, content: <><span className="text-gray-100 ml-4">message: {"{"}</span></> },
+    {
+      num: 8, content: <>
+        <span className="text-gray-100 ml-8">content: </span>
+        <span className="text-green-400">
+          &quot;{formData.message || placeholders.message}&quot;
+        </span>
+        <span className="text-gray-100">,</span>
+      </>
+    },
+    { num: 9, content: <><span className="text-gray-100 ml-4">{"}"} </span></> },
+    { num: 10, content: <><span className="text-gray-100">{"}"}</span><span className="text-gray-100">;</span></> },
+    { num: 11, content: <><span className="text-gray-100"></span></> },
+    {
+      num: 12, content: <>
+        <span className="text-purple-400">async function</span>{" "}
+        <span className="text-yellow-400">sendMessage</span>
+        <span className="text-gray-100">() {"{"}</span>
+      </>
+    },
+    { num: 13, content: <><span className="text-gray-100 ml-4">try {"{"}</span></> },
+    {
+      num: 14, content: <>
+        <span className="text-blue-300 ml-8">console</span>
+        <span className="text-gray-100">.</span>
+        <span className="text-blue-400">log</span>
+        <span className="text-gray-100">(</span>
+        <span className="text-yellow-400">&quot;Sending message...&quot;</span>
+        <span className="text-gray-100">);</span>
+      </>
+    },
+    {
+      num: 15, content: <>
+        <span className="text-gray-100 ml-8">const</span>{" "}
+        <span className="text-blue-400">response</span>{" "}
+        <span className="text-gray-100"> = </span>
+        <span className="text-purple-400">await</span>{" "}
+        <span className="text-blue-400">fetch</span>
+        <span className="text-gray-100">(</span>
+        <span className="text-yellow-400">&quot;/api/contact&quot;</span>
+        <span className="text-gray-100">, {"{"}</span>
+      </>
+    },
+    {
+      num: 16, content: <>
+        <span className="text-gray-100 ml-12">method: </span>
+        <span className="text-yellow-400">&quot;POST&quot;</span>
+        <span className="text-gray-100">,</span>
+      </>
+    },
+    {
+      num: 17, content: <>
+        <span className="text-gray-100 ml-12">body: </span>
+        <span className="text-blue-300">JSON</span>
+        <span className="text-gray-100">.</span>
+        <span className="text-blue-400">stringify</span>
+        <span className="text-gray-100">(developerContact)</span>
+      </>
+    },
+    { num: 18, content: <><span className="text-gray-100 ml-8">{"});"}</span></> },
+    {
+      num: 19, content: <>
+        <span className="text-gray-100 ml-8">return </span>
+        <span className="text-purple-400">await</span>{" "}
+        <span className="text-blue-400">response</span>
+        <span className="text-gray-100">.</span>
+        <span className="text-blue-400">json</span>
+        <span className="text-gray-100">();</span>
+      </>
+    },
+    {
+      num: 20, content: <>
+        <span className="text-gray-100 ml-4">{"}"} </span>
+        <span className="text-purple-400">catch</span>
+        <span className="text-gray-100"> (</span>
+        <span className="text-blue-400">error</span>
+        <span className="text-gray-100">) {"{"}</span>
+      </>
+    },
+    {
+      num: 21, content: <>
+        <span className="text-blue-300 ml-8">console</span>
+        <span className="text-gray-100">.</span>
+        <span className="text-red-400">error</span>
+        <span className="text-gray-100">(</span>
+        <span className="text-yellow-400">&quot;Error:&quot;</span>
+        <span className="text-gray-100">, error);</span>
+      </>
+    },
+    { num: 22, content: <><span className="text-gray-100 ml-4">{"}"}</span></> },
+    { num: 23, content: <><span className="text-gray-100">{"}"}</span></> },
+  ];
+
+  return (
+    <pre className="text-sm text-gray-100 p-5 font-mono leading-relaxed h-full">
+      <code>
+        {codeLines.map((line, index) => (
+          <motion.div
+            key={line.num}
+            className="flex"
+            initial={{ opacity: 0, x: -10 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+            transition={{
+              duration: 0.4,
+              delay: isInView ? 0.1 + (index * 0.03) : 0,
+              ease: "easeOut"
+            }}
+          >
+            <span className="text-gray-500 mr-4 select-none w-5 text-right">{line.num}</span>
+            {line.content}
+          </motion.div>
+        ))}
+      </code>
+    </pre>
+  );
+};
